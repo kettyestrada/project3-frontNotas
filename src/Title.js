@@ -1,5 +1,5 @@
 function Title() {
-  return <h1>App notas</h1>;
+  return <h1>AppNotas</h1>;
 }
 
 export default Title;

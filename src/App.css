@@ -1,38 +1,39 @@
-body{
-    -webkit-font-smoothing:antialiased;
-    -moz-osx-font-smoothing:grayscale;
-    font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
-    margin:0
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  margin: 0;
 }
-main{
-    display:grid;
-    grid-template-rows:auto 1fr;
-    min-height:100vh;
-    transition:.5s
+main {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  min-height: 100vh;
+  transition: 0.5s;
 }
-article.light{
-    --positive:#000;
-    --negative:#fff
+article.light {
+  --positive: #000;
+  --negative: #fff;
 }
-article.dark{
-    --positive:#fff;
-    --negative:#000
+article.dark {
+  --positive: #fff;
+  --negative: #000;
 }
-header{
-    align-items:center;
-    background-color:#2f4f4f;
-    color:#fff;
-    display:flex;
-    justify-content:space-between;
-    padding:1rem
+header {
+  align-items: center;
+  background-color: #94b5b5;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
 }
-header button{
-    background-color:transparent;
-    border:none;
-    font-size:2rem
+header button {
+  background-color: transparent;
+  border: none;
+  font-size: 2rem;
 }
-article{
-    background-color:var(--negative);
-    color:var(--positive);
-    padding:1rem
+article {
+  background-color: var(--negative);
+  color: var(--positive);
+  padding: 1rem;
 }
