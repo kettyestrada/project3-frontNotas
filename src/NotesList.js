@@ -6,6 +6,7 @@ function NotesList() {
   const [token, setToken] = useState(localStorage.getItem('token'));
   const [showModal, setShowModal] = useState(false);
   const [noteId, setNoteId] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     async function fetchNotes() {
@@ -32,16 +33,21 @@ function NotesList() {
 
   const handleConfirmDelete = async () => {
     console.log(`Deleting note with id: ${noteId}`);
-    const resp = await fetch(`http://localhost:8080/note/${noteId}`, {
-      'Content-Type': 'multipart/form-data',
-      headers: {
-        Authorization: token,
-      },
-      method: 'DELETE',
-    });
-    const updatedNotes = notes.filter((note) => note.id !== noteId);
-    setNotes(updatedNotes);
-    setShowModal(false);
+    try {
+      const resp = await fetch(`http://localhost:8080/note/${noteId}`, {
+        'Content-Type': 'multipart/form-data',
+        headers: {
+          Authorization: token,
+        },
+        method: 'DELETE',
+      });
+      const updatedNotes = notes.filter((note) => note.id !== noteId);
+      setNotes(updatedNotes);
+      setShowModal(false);
+    } catch (error) {
+      setError(error);
+      setShowModal(false);
+    }
   };
 
   const handleCancelDelete = () => {
@@ -55,6 +61,7 @@ function NotesList() {
   return (
     <div>
       <h2>Notes List</h2>
+      {error && <p>Error:{error.message}</p>}
       <table>
         <thead>
           <tr>
