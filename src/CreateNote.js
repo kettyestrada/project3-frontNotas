@@ -65,15 +65,7 @@ function CreateNote() {
       });
 
       if (resp.status === 201) {
-        /*const post = {
-          id: resJson.id,
-          title: title,
-          body: body,
-          userId: userId,
-        };
-        const copyNewArray = [post, ...posts];
-        setPosts(copyNewArray);*/
-        console.log('ok');
+        e.target.reset();
       } else {
         console.log('ocurrio un error');
       }
