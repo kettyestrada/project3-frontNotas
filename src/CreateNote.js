@@ -2,19 +2,30 @@ import './App.css';
 import { useState, useEffect } from 'react';
 
 function CreateNote() {
-  const [categories, setCategories] = useState();
+  const [categories, setCategories] = useState([]);
   const [token, setToken] = useState(localStorage.getItem('token'));
 
   useEffect(() => {
     async function fetchCategories() {
       try {
-        const resp = await fetch('http://localhost:8080/categories');
-        const data = await resp.json();
+        const resp = await fetch('http://localhost:8080/categories', {
+          headers: {
+            Authorization: token,
+          },
+        });
 
-        console.log(data);
+        const data = await resp.json();
+        const results = [];
+        data.message.forEach((value) => {
+          results.push({
+            key: value.id,
+            value: value.title,
+          });
+        });
 
         if (resp.status === 200) {
-          setCategories(data.message);
+          setCategories([{ key: '0', value: 'Not Selected' }, ...results]);
+          console.log(categories);
         } else {
           console.log('ocurrio un error');
         }
@@ -32,13 +43,16 @@ function CreateNote() {
 
     const title = e.target.title.value;
     const text = e.target.text.value;
-    const category = 2; //e.target.category.value;
+    const category = e.target.category.value;
     const isPublic = e.target.public.value;
 
     formData.append('title', title);
     formData.append('text', text);
-    formData.append('idCategory', category);
     formData.append('isPublic', isPublic);
+
+    if (category !== '0') {
+      formData.append('idCategory', category);
+    }
 
     try {
       const resp = await fetch('http://localhost:8080/note', {
@@ -92,7 +106,13 @@ function CreateNote() {
             </div>
             <div className='col-75'>
               <select id='category' name='category'>
-                <option value='0'>Not selected</option>
+                {categories.map((value) => {
+                  return (
+                    <option key={value.key} value={value.key}>
+                      {value.value}
+                    </option>
+                  );
+                })}
               </select>
             </div>
           </div>
