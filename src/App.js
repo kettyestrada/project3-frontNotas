@@ -9,7 +9,7 @@ import Menu from './components/main/menu';
 import Content from './Content';
 import CreateNote from './CreateNote';
 import { BrowserRouter, Link } from 'react-router-dom';
-import { ListNotes } from './ListNotes';
+import NotesList from './NotesList';
 
 function App() {
   return (
@@ -18,19 +18,19 @@ function App() {
       <nav>
         <ul>
           <li>
-            <Link to="/createnote">create note</Link>
+            <Link to='/createnote'>create note</Link>
           </li>
           <li>
-            <Link to="/listnotes">List notes</Link>
+            <Link to='/noteslist'>List notes</Link>
           </li>
         </ul>
       </nav>
       <Routes>
-        <Route path="/" element={<menu />} />
-        <Route path="/createnote" element={<CreateNote />} />
-        <Route path="/listnotes" element={<ListNotes />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
+        <Route path='/' element={<menu />} />
+        <Route path='/createnote' element={<CreateNote />} />
+        <Route path='/noteslist' element={<NotesList />} />
+        <Route path='/register' element={<Register />} />
+        <Route path='/login' element={<Login />} />
       </Routes>
       <Menu />
       <Content />
