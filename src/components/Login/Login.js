@@ -10,7 +10,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
 
   //Si estamos logueados redireccionamos a la página principal
-  if (token) return <Navigate to="/" />;
+  if (token) return <Navigate to='/' />;
 
   // Función que maneja el envío del formulario.
 
@@ -20,7 +20,7 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const res = await fetch('http://localhost:4000/user/login', {
+      const res = await fetch('http://localhost:8080/user/login', {
         method: 'post',
         headers: {
           'Content-Type': 'application/json',
@@ -45,25 +45,25 @@ const Login = () => {
   };
 
   return (
-    <main className="Login">
+    <main className='Login'>
       <h2>Login</h2>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="email">Email:</label>
+        <label htmlFor='email'>Email:</label>
         <input
-          type="email"
-          id="email"
+          type='email'
+          id='email'
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
           autoFocus
         />
-        <label htmlFor="pass">Contraseña:</label>
+        <label htmlFor='pass'>Contraseña:</label>
         <input
-          type="password"
-          id="pass"
+          type='password'
+          id='pass'
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          minLength="6"
+          minLength='6'
           required
         />
 

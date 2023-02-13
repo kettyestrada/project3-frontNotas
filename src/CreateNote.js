@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 
 function CreateNote() {
   const [categories, setCategories] = useState();
+  const [token, setToken] = useState(localStorage.getItem('token'));
+
   useEffect(() => {
     async function fetchCategories() {
       try {
@@ -41,6 +43,9 @@ function CreateNote() {
     try {
       const resp = await fetch('http://localhost:8080/note', {
         'Content-Type': 'multipart/form-data',
+        headers: {
+          Authorization: token,
+        },
         method: 'POST',
         body: formData,
       });
