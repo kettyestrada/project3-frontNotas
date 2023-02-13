@@ -4,6 +4,10 @@ import { useState, useEffect } from 'react';
 function CreateNote() {
   const [categories, setCategories] = useState([]);
   const [token, setToken] = useState(localStorage.getItem('token'));
+  const [success, setSuccess] = useState('');
+  const [error, setError] = useState('');
+  const [file, setFile] = useState(null);
+  const [imageUploaded, setImageUploaded] = useState(false);
 
   useEffect(() => {
     async function fetchCategories() {
@@ -16,25 +20,33 @@ function CreateNote() {
 
         const data = await resp.json();
         const results = [];
-        data.message.forEach((value) => {
-          results.push({
-            key: value.id,
-            value: value.title,
-          });
-        });
 
         if (resp.status === 200) {
+          data.message.forEach((value) => {
+            results.push({
+              key: value.id,
+              value: value.title,
+            });
+          });
           setCategories([{ key: '0', value: 'Not Selected' }, ...results]);
-          console.log(categories);
         } else {
-          console.log('ocurrio un error');
+          console.log(data);
+          setError('Error retrieving categories: ' + data.message);
+          setSuccess('');
         }
       } catch (error) {
         console.log(error);
+        setError('Error retrieving categories: ' + error.message);
+        setSuccess('');
       }
     }
     fetchCategories();
   }, []);
+
+  const handleChanged = (e) => {
+    setImageUploaded(true);
+    setFile(e.target.files[0]);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -49,6 +61,10 @@ function CreateNote() {
     formData.append('title', title);
     formData.append('text', text);
     formData.append('isPublic', isPublic);
+
+    if (imageUploaded) {
+      formData.append('file', file);
+    }
 
     if (category !== '0') {
       formData.append('idCategory', category);
@@ -66,11 +82,20 @@ function CreateNote() {
 
       if (resp.status === 201) {
         e.target.reset();
+        setSuccess('Note created successfully');
+        setError('');
+        setImageUploaded(false);
+        setFile(null);
       } else {
-        console.log('ocurrio un error');
+        const data = await resp.json();
+        console.log(data);
+        setError('Error creating note: ' + data.message);
+        setSuccess('');
       }
     } catch (error) {
       console.log(error);
+      setError('Error creating note: ' + error.message);
+      setSuccess('');
     }
   };
 
@@ -88,6 +113,8 @@ function CreateNote() {
                 id='title'
                 name='title'
                 placeholder='Put your title here...'
+                maxLength={100}
+                required
               />
             </div>
           </div>
@@ -110,13 +137,15 @@ function CreateNote() {
           </div>
           <div className='row'>
             <div className='col-25'>
-              <label htmlFor='text'>Description</label>
+              <label htmlFor='text'>Text</label>
             </div>
             <div className='col-75'>
               <textarea
                 id='text'
                 name='text'
                 placeholder='Write something..'
+                maxLength={280}
+                required
               ></textarea>
             </div>
           </div>
@@ -125,7 +154,12 @@ function CreateNote() {
               <label htmlFor='file'>Select a file</label>
             </div>
             <div className='col-75'>
-              <input type='file' id='file' name='file' />
+              <input
+                type='file'
+                id='file'
+                name='file'
+                onChange={handleChanged}
+              />
             </div>
           </div>
           <div className='row'>
@@ -145,6 +179,8 @@ function CreateNote() {
               <label htmlFor='html'>No</label>
             </div>
           </div>
+          <div className='error'>{error}</div>
+          <div className='success'>{success}</div>
           <div className='row'>
             <input type='submit' value='Submit' />
           </div>
