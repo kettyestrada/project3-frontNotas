@@ -25,6 +25,8 @@ function App() {
         <Route path="/notes/:id" element={<NoteView />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/createCategory" element={<CreateCategory />} />
+        <Route path="/categoryList" element={<CategoryList />} />
       </Routes>
       <Menu />
     </ThemeProvider>
