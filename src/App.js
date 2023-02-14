@@ -10,6 +10,7 @@ import Content from './Content';
 import CreateNote from './CreateNote';
 import { BrowserRouter, Link } from 'react-router-dom';
 import NotesList from './NotesList';
+import NoteView from './components/Note/NoteView';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path='/' element={<menu />} />
         <Route path='/createnote' element={<CreateNote />} />
         <Route path='/noteslist' element={<NotesList />} />
+        <Route path='/notes/:id' element={<NoteView />} />
         <Route path='/register' element={<Register />} />
         <Route path='/login' element={<Login />} />
       </Routes>

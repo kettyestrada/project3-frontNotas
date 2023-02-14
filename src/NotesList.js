@@ -56,10 +56,6 @@ function NotesList() {
     setShowModal(false);
   };
 
-  const handleView = (id) => {
-    console.log(`Viewing note with id: ${id}`);
-  };
-
   return (
     <div>
       <h2>Notes List</h2>
