@@ -1,34 +1,31 @@
 import { useState } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useToken } from '../../TokenContext';
-import './Register.css';
+// import './App.css';
 
-const Register = () => {
-  //   const [name, setName] = useState('');
-  const [token, setToken] = useToken();
+export const CreateCategory = () => {
+  const [title, setTitle] = useState('');
   const navigate = useNavigate();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-
-  if (token) return <Navigate to="/" />;
-
+  const [token, setToken] = useToken();
   // Función que maneja el envío del formulario.
 
+  //No permite visualizar esta pantalla si el usuario no está logueado
+  if (!token) return <Navigate to="/" />;
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     setLoading(true);
 
     try {
-      const res = await fetch('http://localhost:8080/user', {
+      const res = await fetch('http://localhost:8080/category', {
         method: 'post',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: token,
         },
         body: JSON.stringify({
-          email,
-          password,
+          title,
         }),
       });
       const body = await res.json();
@@ -39,7 +36,7 @@ const Register = () => {
         alert(body.message);
       } else {
         alert(body.message);
-        navigate('/login');
+        //navigate('/login');
       }
     } catch (err) {
       console.error(err);
@@ -49,32 +46,22 @@ const Register = () => {
   };
 
   return (
-    <main className="Register">
-      <h2>Registro</h2>
+    <main className="CreateCategory">
+      <h2>Categorías</h2>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="email">Email:</label>
+        <label htmlFor="title">Category:</label>
         <input
-          type="email"
-          id="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          type="title"
+          id="title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
           required
           autoFocus
         />
-        <label htmlFor="pass">Contraseña:</label>
-        <input
-          type="password"
-          id="pass"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          minLength="6"
-          required
-        />
-
-        <button disabled={loading}>Registrarse</button>
+        <button disabled={loading}>Submit</button>
       </form>
     </main>
   );
 };
 
-export default Register;
+export default CreateCategory;
