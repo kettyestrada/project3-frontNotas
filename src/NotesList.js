@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import './NotesList.css';
 
 function NotesList() {
@@ -51,6 +52,7 @@ function NotesList() {
   };
 
   const handleCancelDelete = () => {
+    setNoteId(null);
     setShowModal(false);
   };
 
@@ -74,9 +76,21 @@ function NotesList() {
             <tr key={note.id}>
               <td>{note.title}</td>
               <td>
-                <button onClick={() => handleView(note.id)}>View</button>
-                <button onClick={() => handleEdit(note.id)}>Edit</button>
-                <button onClick={() => handleDelete(note.id)}>Delete</button>
+                <Link to={`/notes/${note.id}`}>
+                  <img src='icons8-eye-24.png' alt='view icon' />
+                </Link>
+                <Link to={`/notes/${note.id}/edit`}>
+                  <img src='icons8-pencil-24.png' alt='edit icon' />
+                </Link>
+                <Link
+                  to='#'
+                  onClick={() => {
+                    setNoteId(note.id);
+                    setShowModal(true);
+                  }}
+                >
+                  <img src='icons8-trash-can-24.png' alt='delete icon' />
+                </Link>
               </td>
             </tr>
           ))}
