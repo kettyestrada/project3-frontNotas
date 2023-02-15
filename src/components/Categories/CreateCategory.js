@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useToken } from '../../TokenContext';
+import axios from 'axios';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 // import './App.css';
 
 export const CreateCategory = () => {
@@ -58,7 +61,10 @@ export const CreateCategory = () => {
           required
           autoFocus
         />
-        <button disabled={loading}>Submit</button>
+        {/* <button disabled={loading}>Submit</button> */}
+        <button className=" boton">
+          <i className="fa-solid fa-floppy-disk"></i> Guardar
+        </button>
       </form>
     </main>
   );
