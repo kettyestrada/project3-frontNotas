@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useToken } from '../../TokenContext';
+import { show_alerta, show_validate, show_sucess } from '../../functions';
 import './Register.css';
 
 const Register = () => {
@@ -36,9 +37,9 @@ const Register = () => {
       //si ha ido bien o ha ido mal mostramos por alert el mensaje,
       // sea o no sea de error.
       if (body.status === 'error') {
-        alert(body.message);
+        show_alerta(body.message, 'warning');
       } else {
-        alert(body.message);
+        show_sucess(body.message);
         navigate('/login');
       }
     } catch (err) {

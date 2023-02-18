@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useToken } from '../../TokenContext';
+import { show_alerta, show_validate, show_sucess } from '../../functions';
 import './Login.css';
 
 const Login = () => {
@@ -33,9 +34,9 @@ const Login = () => {
       const body = await res.json();
 
       if (body.status === 'error') {
-        alert(body.message);
+        show_alerta(body.message, 'warning');
       } else {
-        alert(body.message);
+        show_sucess(body.message);
         setToken(body.data.token);
       }
     } catch (err) {
