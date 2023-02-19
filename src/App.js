@@ -13,20 +13,22 @@ import CreateNote from './CreateNote';
 import { BrowserRouter, Link } from 'react-router-dom';
 import NotesList from './NotesList';
 import NoteView from './components/Note/NoteView';
+import NoteEdit from './components/Note/NoteEdit';
 
 function App() {
   return (
     <ThemeProvider>
       <Header />
       <Routes>
-        <Route path="/" element={<menu />} />
-        <Route path="/createnote" element={<CreateNote />} />
-        <Route path="/noteslist" element={<NotesList />} />
-        <Route path="/notes/:id" element={<NoteView />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/createCategory" element={<CreateCategory />} />
-        <Route path="/categoryList" element={<CategoryList />} />
+        <Route path='/' element={<menu />} />
+        <Route path='/createnote' element={<CreateNote />} />
+        <Route path='/noteslist' element={<NotesList />} />
+        <Route path='/notes/:id' element={<NoteView />} />
+        <Route path='/notes/:id/edit' element={<NoteEdit />} />
+        <Route path='/register' element={<Register />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/createCategory' element={<CreateCategory />} />
+        <Route path='/categoryList' element={<CategoryList />} />
       </Routes>
       <Menu />
     </ThemeProvider>
