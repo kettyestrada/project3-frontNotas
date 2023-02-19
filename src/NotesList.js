@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import withReactContent from 'sweetalert2-react-content';
+import Swal from 'sweetalert2';
 import './NotesList.css';
 
 function NotesList() {
@@ -32,17 +34,17 @@ function NotesList() {
     setNoteId(id);
   };
 
-  const handleConfirmDelete = async () => {
-    console.log(`Deleting note with id: ${noteId}`);
+  const handleConfirmDelete = async (id) => {
+    console.log(`Deleting note with id: ${id}`);
     try {
-      const resp = await fetch(`http://localhost:8080/note/${noteId}`, {
+      const resp = await fetch(`http://localhost:8080/note/${id}`, {
         'Content-Type': 'multipart/form-data',
         headers: {
           Authorization: token,
         },
         method: 'DELETE',
       });
-      const updatedNotes = notes.filter((note) => note.id !== noteId);
+      const updatedNotes = notes.filter((note) => note.id !== id);
       setNotes(updatedNotes);
       setShowModal(false);
     } catch (error) {
@@ -56,53 +58,64 @@ function NotesList() {
     setShowModal(false);
   };
 
+  //Valida si se desea eliminar y llama la función de eliminar categoría
+  function confirmDelete(id) {
+    const mySwal = withReactContent(Swal);
+    mySwal
+      .fire({
+        title: 'Are you sure you want to delete this note?',
+        text: 'This action could not be reverted it',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes',
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          handleConfirmDelete(id);
+        }
+      });
+  }
+
   return (
-    <div>
-      <h2>Notes List</h2>
-      {error && <p>Error:{error.message}</p>}
-      <table>
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {notes.map((note) => (
-            <tr key={note.id}>
-              <td>{note.title}</td>
-              <td>
-                <Link to={`/notes/${note.id}`}>
-                  <img src='icons8-eye-24.png' alt='view icon' />
-                </Link>
-                <Link to={`/notes/${note.id}/edit`}>
-                  <img src='icons8-pencil-24.png' alt='edit icon' />
-                </Link>
-                <Link
-                  to='#'
-                  onClick={() => {
-                    setNoteId(note.id);
-                    setShowModal(true);
-                  }}
-                >
-                  <img src='icons8-trash-can-24.png' alt='delete icon' />
-                </Link>
-              </td>
+    <div className='App'>
+      <div className='container-fluid'>
+        <h2>Notes List</h2>
+        {error && <p>Error:{error.message}</p>}
+        <table className='table table-bordered'>
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-      {showModal && (
-        <div className='modal'>
-          <div className='modal-content'>
-            <p>Are you sure you want to delete this note?</p>
-            <div className='modal-actions'>
-              <button onClick={handleConfirmDelete}>Yes</button>
-              <button onClick={handleCancelDelete}>No</button>
-            </div>
-          </div>
-        </div>
-      )}
+          </thead>
+          <tbody className='table-group-divider'>
+            {notes.map((note) => (
+              <tr key={note.id}>
+                <td>{note.title}</td>
+                <td>
+                  <Link to={`/notes/${note.id}`} className='btn btn-info'>
+                    <i className='fa-solid fa-eye'></i>
+                  </Link>
+                  <Link
+                    to={`/notes/${note.id}/edit`}
+                    className='btn btn-warning'
+                  >
+                    <i className='fa-solid fa-edit'></i>
+                  </Link>
+                  <Link
+                    onClick={() => confirmDelete(note.id)}
+                    className='btn btn-danger'
+                  >
+                    <i className='fa-solid fa-trash'></i>
+                  </Link>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
