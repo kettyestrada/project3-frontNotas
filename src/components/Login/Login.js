@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useToken } from '../../TokenContext';
 import { show_alerta, show_validate, show_sucess } from '../../functions';
+import { NavLink } from 'react-router-dom';
 import './Login.css';
 
 const Login = () => {
@@ -70,6 +71,7 @@ const Login = () => {
         />
 
         <button disabled={loading}>Ingresar</button>
+        <NavLink to="/register">Registrarme</NavLink>
       </form>
     </main>
   );

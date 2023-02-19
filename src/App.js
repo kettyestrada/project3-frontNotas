@@ -20,15 +20,15 @@ function App() {
     <ThemeProvider>
       <Header />
       <Routes>
-        <Route path='/' element={<menu />} />
-        <Route path='/createnote' element={<CreateNote />} />
-        <Route path='/noteslist' element={<NotesList />} />
-        <Route path='/notes/:id' element={<NoteView />} />
-        <Route path='/notes/:id/edit' element={<NoteEdit />} />
-        <Route path='/register' element={<Register />} />
-        <Route path='/login' element={<Login />} />
-        <Route path='/createCategory' element={<CreateCategory />} />
-        <Route path='/categoryList' element={<CategoryList />} />
+        <Route path="/" element={<menu />} />
+        <Route path="/createnote" element={<CreateNote />} />
+        <Route path="/noteslist" element={<NotesList />} />
+        <Route path="/notes/:id" element={<NoteView />} />
+        <Route path="/notes/:id/edit" element={<NoteEdit />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/createCategory" element={<CreateCategory />} />
+        <Route path="/categoryList" element={<CategoryList />} />
       </Routes>
       <Menu />
     </ThemeProvider>
