@@ -2,3 +2,9 @@ title > h1 {
   color: #fff;
   background-color: #fff;
 }
+
+p.msgLogueado {
+  font-weight: bold;
+  color: #fff;
+  text-decoration: none;
+}

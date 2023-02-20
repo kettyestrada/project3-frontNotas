@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useToken } from '../../TokenContext';
-import { show_alerta, show_validate, show_sucess } from '../../functions';
+import { showAlert, showSuccess } from '../../functions';
 import { NavLink } from 'react-router-dom';
 import './Login.css';
 
@@ -35,9 +35,9 @@ const Login = () => {
       const body = await res.json();
 
       if (body.status === 'error') {
-        show_alerta(body.message, 'warning');
+        showAlert(body.message, 'warning');
       } else {
-        show_sucess(body.message);
+        showSuccess(body.message);
         setToken(body.data.token);
       }
     } catch (err) {

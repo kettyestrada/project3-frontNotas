@@ -1,6 +1,7 @@
 import Title from '../../Title';
 import { NavLink } from 'react-router-dom';
 import { useToken } from '../../TokenContext';
+import './header.css';
 
 function Header() {
   const [token, setToken] = useToken();
@@ -8,12 +9,18 @@ function Header() {
     <header>
       <NavLink to="/">
         <Title />
-        {token && (
-          <div className="button" onClick={() => setToken(null)}>
-            <p>Cerrar Sesión</p>
-          </div>
-        )}
       </NavLink>
+
+      {token && (
+        <div className="userLogeado">
+          <p className="msgLogueado"> Has iniciado sesión en AppNotas</p>
+          <NavLink to="/">
+            <div className="button" onClick={() => setToken(null)}>
+              <p>Cerrar Sesión</p>
+            </div>
+          </NavLink>
+        </div>
+      )}
     </header>
   );
 }

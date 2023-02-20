@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useToken } from '../../TokenContext';
 import { useEffect } from 'react';
-import { show_alerta, show_validate, show_sucess } from '../../functions';
+import { showAlert, showSuccess } from '../../functions';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 // import './App.css';
@@ -45,7 +45,7 @@ export const CategoryList = () => {
   // Valida las acciones de guardar/actualizar desde el modal
   const validate = () => {
     if (title.trim() === '') {
-      show_alerta('Escribe el nombre de la categoría', 'warning');
+      showAlert('Escribe el nombre de la categoría', 'warning');
     } else {
       if (operation === 1) {
         //crear categoria
@@ -53,7 +53,7 @@ export const CategoryList = () => {
       } else {
         //actualizar categoria
         updateCategory();
-        //show_alerta('actualizar categoria', 'success');
+        //showAlert('actualizar categoria', 'success');
       }
     }
   };
@@ -96,10 +96,10 @@ export const CategoryList = () => {
       //si ha ido bien o ha ido mal mostramos por alert el mensaje,
       // sea o no sea de error.
       if (body.status === 'error') {
-        show_alerta(body.message, 'warning');
+        showAlert(body.message, 'warning');
       } else {
         setTitle('');
-        show_sucess(body.message);
+        showSuccess(body.message);
         document.getElementById('btnCerrar').click();
         getCategories();
         //navigate('/login');
@@ -160,10 +160,10 @@ export const CategoryList = () => {
       //si ha ido bien o ha ido mal mostramos por alert el mensaje,
       // sea o no sea de error.
       if (body.status === 'error') {
-        show_alerta(body.message, 'warning');
+        showAlert(body.message, 'warning');
       } else {
         setTitle('');
-        show_sucess(body.message);
+        showSuccess(body.message);
         document.getElementById('btnCerrar').click();
         getCategories();
       }
@@ -187,9 +187,9 @@ export const CategoryList = () => {
       const data = await resp.json();
       if (resp.status === 200) {
         getCategories();
-        show_sucess('Categoría eliminada');
+        showSuccess('Categoría eliminada');
       } else if (resp.status === 500) {
-        show_alerta(
+        showAlert(
           'No se puede eliminar la categoría porque esta asociada a una nota',
           'warning'
         );

@@ -4,7 +4,7 @@ import { useToken } from '../../TokenContext';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
-import { show_alerta, show_validate, show_sucess } from '../../functions';
+import { showAlert, showSuccess } from '../../functions';
 // import './App.css';
 
 export const CreateCategory = () => {
@@ -37,10 +37,10 @@ export const CreateCategory = () => {
       //si ha ido bien o ha ido mal mostramos por alert el mensaje,
       // sea o no sea de error.
       if (body.status === 'error') {
-        show_alerta(body.message, 'warning');
+        showAlert(body.message, 'warning');
       } else {
         setTitle('');
-        show_sucess(body.message);
+        showSuccess(body.message);
         //navigate('/login');
       }
     } catch (err) {
