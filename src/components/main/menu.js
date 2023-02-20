@@ -1,8 +1,10 @@
 import { NavLink } from 'react-router-dom';
 import { useToken } from '../../TokenContext';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 const Menu = () => {
   const [token, setToken] = useToken();
+  if (!token) return <Navigate to="/login" />;
   return (
     <nav>
       {/** Menú para usuarios logueados */}
