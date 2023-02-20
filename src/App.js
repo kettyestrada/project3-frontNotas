@@ -4,7 +4,6 @@ import Login from './components/Login/Login';
 import CreateCategory from './components/Categories/CreateCategory';
 import CategoryList from './components/Categories/CategoryList';
 import './App.css';
-import { ThemeProvider } from './ThemeContext';
 import Header from './components/header/Header';
 import Footer from './components/Footer/footer';
 import Menu from './components/main/menu';
@@ -17,21 +16,20 @@ import NoteEdit from './components/Note/NoteEdit';
 
 function App() {
   return (
-    <ThemeProvider>
+    <BrowserRouter>
       <Header />
       <Routes>
-        <Route path="/" element={<menu />} />
+        <Route path="/" element={<Menu />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/createnote" element={<CreateNote />} />
         <Route path="/noteslist" element={<NotesList />} />
         <Route path="/notes/:id" element={<NoteView />} />
         <Route path="/notes/:id/edit" element={<NoteEdit />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
         <Route path="/createCategory" element={<CreateCategory />} />
         <Route path="/categoryList" element={<CategoryList />} />
       </Routes>
-      <Menu />
-    </ThemeProvider>
+    </BrowserRouter>
   );
 }
 

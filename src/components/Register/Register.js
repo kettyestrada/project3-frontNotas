@@ -50,7 +50,7 @@ const Register = () => {
   };
 
   return (
-    <main className="Register">
+    <div className="Register">
       <h2>Registro</h2>
       <form onSubmit={handleSubmit}>
         <label htmlFor="email">Email:</label>
@@ -74,7 +74,7 @@ const Register = () => {
 
         <button disabled={loading}>Registrarse</button>
       </form>
-    </main>
+    </div>
   );
 };
 
