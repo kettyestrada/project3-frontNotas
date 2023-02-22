@@ -1,57 +1,68 @@
-import './App.css';
+import React from 'react';
+import './Note.css';
+
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+import Dropzone from 'react-dropzone';
+
 import { useState, useEffect } from 'react';
-import { Navigate } from 'react-router-dom';
+import { useNavigate, Navigate } from 'react-router-dom';
+import { showAlert, showSuccess } from '../../functions';
 
 function CreateNote() {
+  const token = localStorage.getItem('token');
   const [categories, setCategories] = useState([]);
-  const [token, setToken] = useState(localStorage.getItem('token'));
-  const [success, setSuccess] = useState('');
-  const [error, setError] = useState('');
-  const [file, setFile] = useState(null);
-  const [imageUploaded, setImageUploaded] = useState(false);
+  const [photo, setPhoto] = useState(null);
+
+  const [text, setText] = useState('');
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     //Solo solicita las categorias si el usuario está logueado.
     if (token) {
-      //cargo las categorias
       fetchCategories();
     }
   }, []);
 
   async function fetchCategories() {
     try {
-      const resp = await fetch('http://localhost:8080/categories', {
+      const response = await fetch('http://localhost:8080/categories', {
         headers: {
           Authorization: token,
         },
       });
 
-      const data = await resp.json();
+      const data = await response.json();
       const results = [];
 
-      if (resp.status === 200) {
+      if (response.status === 200) {
         data.message.forEach((value) => {
           results.push({
             key: value.id,
             value: value.title,
           });
         });
-        setCategories([{ key: '0', value: 'Not Selected' }, ...results]);
+        setCategories([{ key: 0, value: 'Sin categoria' }, ...results]);
       } else {
         console.log(data);
-        setError('Error retrieving categories: ' + data.message);
-        setSuccess('');
+        showAlert(
+          'Error al obtener las categorias: ' + data.message,
+          'warning'
+        );
       }
     } catch (error) {
       console.log(error);
-      setError('Error retrieving categories: ' + error.message);
-      setSuccess('');
+      showAlert('Error al obtener las categorias: ' + error.message, 'warning');
     }
   }
 
-  const handleChanged = (e) => {
-    setImageUploaded(true);
-    setFile(e.target.files[0]);
+  const handleFileDrop = (files) => {
+    if (files.length > 0 && files[0].type.startsWith('image/')) {
+      setPhoto(files[0]);
+    } else {
+      showAlert('Solo se permite cargar imágenes', 'warning');
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -60,7 +71,6 @@ function CreateNote() {
     const formData = new FormData();
 
     const title = e.target.title.value;
-    const text = e.target.text.value;
     const category = e.target.category.value;
     const isPublic = e.target.public.value;
 
@@ -68,8 +78,8 @@ function CreateNote() {
     formData.append('text', text);
     formData.append('isPublic', isPublic);
 
-    if (imageUploaded) {
-      formData.append('file', file);
+    if (photo) {
+      formData.append('file', photo);
     }
 
     if (category !== '0') {
@@ -87,21 +97,15 @@ function CreateNote() {
       });
 
       if (resp.status === 201) {
-        e.target.reset();
-        setSuccess('Note created successfully');
-        setError('');
-        setImageUploaded(false);
-        setFile(null);
+        showSuccess('Nota creada satisfactoriamente');
+        navigate('/noteslist');
       } else {
         const data = await resp.json();
         console.log(data);
-        setError('Error creating note: ' + data.message);
-        setSuccess('');
+        showAlert('Error al crear una nota: ' + data.message, 'warning');
       }
     } catch (error) {
-      console.log(error);
-      setError('Error creating note: ' + error.message);
-      setSuccess('');
+      showAlert('Error al crear una nota: ' + error.message, 'warning');
     }
   };
   if (!token) return <Navigate to='/' />;
@@ -112,14 +116,14 @@ function CreateNote() {
         <form onSubmit={handleSubmit}>
           <div className='row'>
             <div className='col-25'>
-              <label htmlFor='title'>Title</label>
+              <label htmlFor='title'>Título</label>
             </div>
             <div className='col-75'>
               <input
                 type='text'
                 id='title'
                 name='title'
-                placeholder='Put your title here...'
+                placeholder='Escribe aquí tú título...'
                 maxLength={100}
                 required
               />
@@ -128,7 +132,7 @@ function CreateNote() {
 
           <div className='row'>
             <div className='col-25'>
-              <label htmlFor='category'>Category</label>
+              <label htmlFor='category'>Categoria</label>
             </div>
             <div className='col-75'>
               <select id='category' name='category'>
@@ -144,38 +148,27 @@ function CreateNote() {
           </div>
           <div className='row'>
             <div className='col-25'>
-              <label htmlFor='text'>Text</label>
+              <label htmlFor='text'>Texto</label>
             </div>
             <div className='col-75'>
-              <textarea
+              <ReactQuill
                 id='text'
                 name='text'
-                placeholder='Write something..'
-                maxLength={280}
+                placeholder='Escribe el texto de tú nota aquí..'
+                maxLength={3000}
+                value={text}
+                onChange={setText}
                 required
-              ></textarea>
+              ></ReactQuill>
             </div>
           </div>
           <div className='row'>
             <div className='col-25'>
-              <label htmlFor='file'>Select a file</label>
-            </div>
-            <div className='col-75'>
-              <input
-                type='file'
-                id='file'
-                name='file'
-                onChange={handleChanged}
-              />
-            </div>
-          </div>
-          <div className='row'>
-            <div className='col-25'>
-              <label htmlFor='isPublic'>Is public?</label>
+              <label htmlFor='isPublic'>Es pública?</label>
             </div>
             <div className='col-75'>
               <input type='radio' id='public' name='is_public' value='true' />
-              <label htmlFor='html'>Yes</label>
+              <label htmlFor='html'>Si</label>
               <input
                 type='radio'
                 id='public'
@@ -186,10 +179,30 @@ function CreateNote() {
               <label htmlFor='html'>No</label>
             </div>
           </div>
-          <div className='error'>{error}</div>
-          <div className='success'>{success}</div>
+          {!photo && (
+            <Dropzone onDrop={handleFileDrop}>
+              {({ getRootProps, getInputProps }) => (
+                <div {...getRootProps()}>
+                  <input {...getInputProps()} />
+                  <div className='dropzone'>
+                    Arrastra una imagen aquí o haz clic para seleccionar un
+                    archivo.
+                  </div>
+                </div>
+              )}
+            </Dropzone>
+          )}
+          {photo && (
+            <img
+              src={URL.createObjectURL(photo)}
+              width='200'
+              height='auto'
+              alt='Imagen seleccionada'
+            />
+          )}
+
           <div className='row'>
-            <input type='submit' value='Submit' />
+            <input type='submit' value='Crear' />
           </div>
         </form>
       </div>

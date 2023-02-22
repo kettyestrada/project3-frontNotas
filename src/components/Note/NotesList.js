@@ -1,43 +1,44 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import withReactContent from 'sweetalert2-react-content';
+import { showAlert, showSuccess } from '../../functions';
 import Swal from 'sweetalert2';
 import './NotesList.css';
 
 function NotesList() {
   const [notes, setNotes] = useState([]);
-  const [token, setToken] = useState(localStorage.getItem('token'));
-  const [showModal, setShowModal] = useState(false);
-  const [noteId, setNoteId] = useState(null);
-  const [error, setError] = useState(null);
+  const token = localStorage.getItem('token');
 
+  //Solo solicita las categorias si el usuario está logueado.
   useEffect(() => {
-    async function fetchNotes() {
-      const resp = await fetch('http://localhost:8080/notes', {
+    if (token) {
+      fetchNotes();
+    }
+  }, []);
+
+  async function fetchNotes() {
+    try {
+      const response = await fetch('http://localhost:8080/notes', {
         headers: {
           Authorization: token,
         },
       });
-      const data = await resp.json();
-      console.log(data);
-      setNotes(data.message);
+      const data = await response.json();
+
+      if (response.status === 200) {
+        setNotes(data.message);
+      } else {
+        console.log(data);
+        showAlert('Error al obtener las notas: ' + data.message, 'warning');
+      }
+    } catch (error) {
+      showAlert('Error al obtener las notas: ' + error.message, 'warning');
     }
-    fetchNotes();
-  }, []);
-
-  const handleEdit = (id) => {
-    console.log(`Editing note with id: ${id}`);
-  };
-
-  const handleDelete = (id) => {
-    setShowModal(true);
-    setNoteId(id);
-  };
+  }
 
   const handleConfirmDelete = async (id) => {
-    console.log(`Deleting note with id: ${id}`);
     try {
-      const resp = await fetch(`http://localhost:8080/note/${id}`, {
+      await fetch(`http://localhost:8080/note/${id}`, {
         'Content-Type': 'multipart/form-data',
         headers: {
           Authorization: token,
@@ -45,17 +46,11 @@ function NotesList() {
         method: 'DELETE',
       });
       const updatedNotes = notes.filter((note) => note.id !== id);
+      showSuccess('Nota eliminada satisfactoriamente');
       setNotes(updatedNotes);
-      setShowModal(false);
     } catch (error) {
-      setError(error);
-      setShowModal(false);
+      showAlert('Error al eliminar la nota: ' + error.message, 'warning');
     }
-  };
-
-  const handleCancelDelete = () => {
-    setNoteId(null);
-    setShowModal(false);
   };
 
   //Valida si se desea eliminar y llama la función de eliminar categoría
@@ -63,13 +58,14 @@ function NotesList() {
     const mySwal = withReactContent(Swal);
     mySwal
       .fire({
-        title: 'Are you sure you want to delete this note?',
-        text: 'This action could not be reverted it',
+        title: 'Está seguro que desea eliminar esta nota?',
+        text: 'Esta acción no podrá revertirse',
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes',
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'Si',
       })
       .then((result) => {
         if (result.isConfirmed) {
@@ -78,22 +74,27 @@ function NotesList() {
       });
   }
 
+  if (!token) return <Navigate to='/' />;
+
   return (
     <div className='App'>
       <div className='container-fluid'>
-        <h2>Notes List</h2>
-        {error && <p>Error:{error.message}</p>}
+        <h2>Listar notas</h2>
         <table className='table table-bordered'>
           <thead>
             <tr>
-              <th>Title</th>
-              <th>Actions</th>
+              <th>Titulo</th>
+              <th>Categoria</th>
+              <th>Acciones</th>
             </tr>
           </thead>
           <tbody className='table-group-divider'>
             {notes.map((note) => (
               <tr key={note.id}>
                 <td>{note.title}</td>
+                <td>
+                  {note.categoryTitle ? note.categoryTitle : 'Sin Categoria'}
+                </td>
                 <td>
                   <Link to={`/notes/${note.id}`} className='btn btn-info'>
                     <i className='fa-solid fa-eye'></i>
