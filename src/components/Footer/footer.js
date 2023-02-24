@@ -1,12 +1,13 @@
-import { useContext } from 'react';
-import { ThemeContext } from '../../ThemeContext';
+import React from 'react';
+import './Footer.css';
 
-function ThemeSwitcher() {
-  const { theme, setTheme } = useContext(ThemeContext);
-
+const Footer = () => {
   return (
-    <button onClick={() => setTheme(!theme)}>{theme ? '🌞' : '🌙'}</button>
+    <footer>
+      <p>HackaBoss 2023</p>
+      <p>Virgi-Ketty</p>
+    </footer>
   );
-}
+};
 
-export default ThemeSwitcher;
+export default Footer;

@@ -74,13 +74,13 @@ function NotesList() {
       });
   }
 
-  if (!token) return <Navigate to='/' />;
+  if (!token) return <Navigate to="/login" />;
 
   return (
-    <div className='App'>
-      <div className='container-fluid'>
+    <div className="App">
+      <div className="container-fluid">
         <h2>Listar notas</h2>
-        <table className='table table-bordered'>
+        <table className="table table-bordered">
           <thead>
             <tr>
               <th>Titulo</th>
@@ -88,7 +88,7 @@ function NotesList() {
               <th>Acciones</th>
             </tr>
           </thead>
-          <tbody className='table-group-divider'>
+          <tbody className="table-group-divider">
             {notes.map((note) => (
               <tr key={note.id}>
                 <td>{note.title}</td>
@@ -96,20 +96,20 @@ function NotesList() {
                   {note.categoryTitle ? note.categoryTitle : 'Sin Categoria'}
                 </td>
                 <td>
-                  <Link to={`/notes/${note.id}`} className='btn btn-info'>
-                    <i className='fa-solid fa-eye'></i>
+                  <Link to={`/notes/${note.id}`} className="btn btn-info">
+                    <i className="fa-solid fa-eye"></i>
                   </Link>
                   <Link
                     to={`/notes/${note.id}/edit`}
-                    className='btn btn-warning'
+                    className="btn btn-warning"
                   >
-                    <i className='fa-solid fa-edit'></i>
+                    <i className="fa-solid fa-edit"></i>
                   </Link>
                   <Link
                     onClick={() => confirmDelete(note.id)}
-                    className='btn btn-danger'
+                    className="btn btn-danger"
                   >
-                    <i className='fa-solid fa-trash'></i>
+                    <i className="fa-solid fa-trash"></i>
                   </Link>
                 </td>
               </tr>

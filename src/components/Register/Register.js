@@ -11,7 +11,7 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
-  //if (!token) return <Navigate to="/" />;
+  if (token) return <Navigate to="/" />;
 
   // Función que maneja el envío del formulario.
 
@@ -49,7 +49,7 @@ const Register = () => {
   };
 
   return (
-    <div className="Register">
+    <main className="Register">
       <h2>Registro</h2>
       <form onSubmit={handleSubmit}>
         <label htmlFor="email">Email:</label>
@@ -73,7 +73,7 @@ const Register = () => {
 
         <button disabled={loading}>Registrarse</button>
       </form>
-    </div>
+    </main>
   );
 };
 

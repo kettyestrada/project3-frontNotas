@@ -5,7 +5,6 @@ import './menu.css';
 
 const Menu = () => {
   const [token, setToken] = useToken();
-  if (!token) return <Navigate to="/login" />;
   return (
     <nav>
       {/** Menú para usuarios logueados */}
@@ -18,7 +17,7 @@ const Menu = () => {
             <NavLink to="/noteslist">Listar Notas</NavLink>
           </li>
           <li>
-            <NavLink to="/CategoryList">Gestionar Categorias</NavLink>
+            <NavLink to="/categoryList">Gestionar Categorias</NavLink>
           </li>
         </ul>
       )}

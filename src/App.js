@@ -4,7 +4,7 @@ import Login from './components/Login/Login';
 import CategoryList from './components/Categories/CategoryList';
 import './App.css';
 import Header from './components/Header/Header';
-import Footer from './components/Footer/footer';
+import Footer from './components/Footer/Footer';
 
 import { BrowserRouter } from 'react-router-dom';
 import NotesList from './components/Note/NotesList';
@@ -26,6 +26,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/categoryList" element={<CategoryList />} />
       </Routes>
+      <Footer />
     </BrowserRouter>
   );
 }
