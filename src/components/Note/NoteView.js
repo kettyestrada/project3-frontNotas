@@ -92,18 +92,18 @@ const NoteView = () => {
   };
 
   return (
-    <div className='note'>
+    <div className="note">
       <h1>{note.title}</h1>
       {note.category_id && <h3>Categoria: {note.categoryTitle}</h3>}
-      {note.email && <div className='by'>Por {note.email}</div>}
+      {note.email && <div className="by">Por {note.email}</div>}
       {note.created_at && (
-        <div className='created-time'>Creado el {createdAt}</div>
+        <div className="created-time">Creado el {createdAt}</div>
       )}
       {note.image && <img src={showImage(note.image)} alt={note.title} />}
       <div>{text}</div>
 
-      <Link onClick={() => confirmDelete(note.id)} className='btn btn-danger'>
-        <i className='fa-solid fa-trash'></i> Eliminar Nota
+      <Link onClick={() => confirmDelete(note.id)} className="btn btn-danger">
+        <i className="fa-solid fa-trash"></i> Eliminar Nota
       </Link>
     </div>
   );

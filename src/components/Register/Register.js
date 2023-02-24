@@ -5,14 +5,13 @@ import { showAlert, showSuccess } from '../../functions';
 import './Register.css';
 
 const Register = () => {
-  //   const [name, setName] = useState('');
   const [token, setToken] = useToken();
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
-  if (token) return <Navigate to="/" />;
+  //if (!token) return <Navigate to="/" />;
 
   // Función que maneja el envío del formulario.
 

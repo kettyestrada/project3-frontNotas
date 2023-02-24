@@ -1,6 +1,12 @@
-title > h1 {
-  color: #fff;
-  background-color: #fff;
+header {
+  display: flex;
+  flex-direction: column;
+}
+div.titleUser {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
 }
 
 p.msgLogueado {

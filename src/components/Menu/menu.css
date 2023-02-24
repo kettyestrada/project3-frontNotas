@@ -1,0 +1,17 @@
+nav {
+  width: 100%;
+  background-color: rgb(142, 225, 236);
+}
+ul {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
+li {
+  padding: 0 1rem;
+  text-decoration: none;
+  list-style: none;
+}

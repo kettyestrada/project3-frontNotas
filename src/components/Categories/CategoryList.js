@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { useToken } from '../../TokenContext';
 import { useEffect } from 'react';
 import { showAlert, showSuccess } from '../../functions';
@@ -9,8 +9,6 @@ import withReactContent from 'sweetalert2-react-content';
 
 export const CategoryList = () => {
   const [categories, setCategories] = useState([]);
-  const [success, setSuccess] = useState('');
-  const [error, setError] = useState('');
   const [title, setTitle] = useState('');
   const [idCategory, setIdCategory] = useState('');
   const [titleModal, setTitleModal] = useState('');
@@ -132,13 +130,11 @@ export const CategoryList = () => {
         setCategories(results);
       } else {
         console.log(data);
-        setError('Error retrieving categories: ' + data.message);
-        setSuccess('');
+        showAlert(data.message, 'warning');
       }
     } catch (error) {
       console.log(error);
-      setError('Error retrieving categories: ' + error.message);
-      setSuccess('');
+      showAlert(error.message, 'warning');
     }
   }
 
@@ -195,13 +191,10 @@ export const CategoryList = () => {
         );
       } else {
         console.log(data);
-        setError('Error deleting category: ' + data.message);
-        setSuccess('');
+        showAlert(data.message, 'warning');
       }
     } catch (error) {
-      console.log(error);
-      setError('Error deleting category: ' + error.message);
-      setSuccess('');
+      showAlert(error.message, 'warning');
     }
   }
 

@@ -1,6 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import { useToken } from '../../TokenContext';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
+import './menu.css';
 
 const Menu = () => {
   const [token, setToken] = useToken();
@@ -17,18 +18,7 @@ const Menu = () => {
             <NavLink to="/noteslist">Listar Notas</NavLink>
           </li>
           <li>
-            <NavLink to="/CategoryList"> Gestionar Categorias </NavLink>
-          </li>
-        </ul>
-      )}
-      {/** Menú para usuarios no logueados */}
-      {!token && (
-        <ul>
-          <li>
-            <NavLink to="/login"> Login </NavLink>
-          </li>
-          <li>
-            <NavLink to="/register"> Registro </NavLink>
+            <NavLink to="/CategoryList">Gestionar Categorias</NavLink>
           </li>
         </ul>
       )}
