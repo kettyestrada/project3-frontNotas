@@ -15,3 +15,11 @@
   margin-bottom: 1rem;
   padding: 0.3rem;
 }
+
+.btn-register{
+  background-color: #aeb3ae;
+}
+
+.btn-register:hover{
+  background-color: #8f928f;
+}

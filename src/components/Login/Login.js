@@ -12,7 +12,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   //Si estamos logueados redireccionamos a la página principal
-  if (token) return <Navigate to="/" />;
+  if (token) return <Navigate to='/' />;
 
   // Función que maneja el envío del formulario.
 
@@ -49,31 +49,33 @@ const Login = () => {
   };
 
   return (
-    <main className="Login">
-      <div className="divLogin">
+    <main className='Login'>
+      <div className='divLogin'>
         <h2>Login</h2>
         <form onSubmit={handleSubmit}>
-          <label htmlFor="email">Email:</label>
+          <label htmlFor='email'>Email:</label>
           <input
-            type="email"
-            id="email"
+            type='email'
+            id='email'
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
             autoFocus
           />
-          <label htmlFor="pass">Contraseña:</label>
+          <label htmlFor='pass'>Contraseña:</label>
           <input
-            type="password"
-            id="pass"
+            type='password'
+            id='pass'
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            minLength="4"
+            minLength='4'
             required
           />
 
-          <button disabled={loading}>Ingresar</button>
-          <NavLink to="/register">Registrarme</NavLink>
+          <button className='btn-login' disabled={loading}>
+            Ingresar
+          </button>
+          <NavLink to='/register'>Registrarme</NavLink>
         </form>
       </div>
     </main>

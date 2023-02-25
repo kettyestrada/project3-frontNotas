@@ -7,11 +7,18 @@ th, td {
   border: 1px solid #dddddd;
   padding: 8px;
   text-align: left;
-  width: 33%;
 }
 
 th {
   background-color: #dddddd;
+  text-align: center !important;
+}
+.th-50{
+  width: 50%;
+}
+
+.th-25{
+  width: 25%;
 }
 
 button {
@@ -60,4 +67,8 @@ a img {
 
 a img:hover {
   filter: brightness(1.5);
+}
+
+.btn-space {
+  margin-left: 0.5rem !important;
 }

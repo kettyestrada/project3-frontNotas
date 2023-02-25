@@ -146,12 +146,9 @@ const NoteEdit = () => {
 
   return (
     <>
-      <div className='container'>
+      <div className='note'>
         <form onSubmit={handleSubmit}>
           <div className='row'>
-            <div className='col-25'>
-              <label htmlFor='title'>Titulo</label>
-            </div>
             <div className='col-75'>
               <input
                 type='text'
@@ -189,9 +186,6 @@ const NoteEdit = () => {
             </div>
           </div>
           <div className='row'>
-            <div className='col-25'>
-              <label htmlFor='text'>Texto</label>
-            </div>
             <div className='col-75'>
               <ReactQuill
                 id='text'

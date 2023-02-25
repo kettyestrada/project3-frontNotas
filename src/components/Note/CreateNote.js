@@ -112,12 +112,9 @@ function CreateNote() {
 
   return (
     <>
-      <div className='container'>
+      <div className='note'>
         <form onSubmit={handleSubmit}>
           <div className='row'>
-            <div className='col-25'>
-              <label htmlFor='title'>Título</label>
-            </div>
             <div className='col-75'>
               <input
                 type='text'
@@ -125,6 +122,7 @@ function CreateNote() {
                 name='title'
                 placeholder='Escribe aquí tú título...'
                 maxLength={100}
+                autoFocus
                 required
               />
             </div>
@@ -147,10 +145,7 @@ function CreateNote() {
             </div>
           </div>
           <div className='row'>
-            <div className='col-25'>
-              <label htmlFor='text'>Texto</label>
-            </div>
-            <div className='col-75'>
+            <div className='text-note'>
               <ReactQuill
                 id='text'
                 name='text'
