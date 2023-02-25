@@ -124,17 +124,3 @@ input[type=submit]:hover {
   margin-bottom: 10px;
   margin-top: 10px;
 }
-
-.note button {
-  padding: 10px;
-  background-color: #f44336;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-.note button:hover {
-  background-color: #e53935;
-}

@@ -202,7 +202,7 @@ export const CategoryList = () => {
   if (!token) return <Navigate to='/' />;
 
   return (
-    <div className='App'>
+    <div className='note'>
       <div className='container-fluid'>
         <div className='row mt-3'>
           <div className='col-md-4 offset-md-4'>
