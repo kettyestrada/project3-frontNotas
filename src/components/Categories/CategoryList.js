@@ -225,8 +225,8 @@ export const CategoryList = () => {
           <thead>
             <tr>
               <th>#</th>
-              <th>CATEGORIA</th>
-              <th></th>
+              <th>Categoría</th>
+              <th>Acciones</th>
             </tr>
           </thead>
           <tbody className="table-group-divider">
