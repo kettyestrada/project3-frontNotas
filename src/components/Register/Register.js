@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate, NavLink } from 'react-router-dom';
 import { useToken } from '../../TokenContext';
 import { showAlert, showSuccess } from '../../functions';
 import './Register.css';
@@ -50,29 +50,32 @@ const Register = () => {
 
   return (
     <main className="Register">
-      <h2>Registro</h2>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="email">Email:</label>
-        <input
-          type="email"
-          id="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          autoFocus
-        />
-        <label htmlFor="pass">Contraseña:</label>
-        <input
-          type="password"
-          id="pass"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          minLength="6"
-          required
-        />
+      <div className="divRegister">
+        <h2>Registro</h2>
+        <form onSubmit={handleSubmit}>
+          <label htmlFor="email">Email:</label>
+          <input
+            type="email"
+            id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            autoFocus
+          />
+          <label htmlFor="pass">Contraseña:</label>
+          <input
+            type="password"
+            id="pass"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            minLength="6"
+            required
+          />
 
-        <button disabled={loading}>Registrarse</button>
-      </form>
+          <button disabled={loading}>Registrarse</button>
+          <NavLink to="/login">Iniciar sesión</NavLink>
+        </form>
+      </div>
     </main>
   );
 };

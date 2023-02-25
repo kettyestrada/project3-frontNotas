@@ -1,17 +1,35 @@
 nav {
-  width: 100%;
-  background-color: rgb(142, 225, 236);
+  width: 70%;
+  background-color: rgb(245, 233, 207);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.25rem;
 }
 ul {
+  height: 100%;
+  margin: 0 0 0 0;
+  padding: 0 0 0 0;
   width: 100%;
   height: 100%;
   display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: space-around;
   align-items: center;
 }
 li {
-  padding: 0 1rem;
-  text-decoration: none;
   list-style: none;
+}
+.menuItem {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  color: rgb(9, 9, 9);
+  border: none;
+  border-radius: 0.25rem;
+  text-decoration: none;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.menuItem:hover {
+  background-color: #dae2c2;
 }

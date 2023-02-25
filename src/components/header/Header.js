@@ -1,4 +1,3 @@
-import Title from '../../Title';
 import { NavLink } from 'react-router-dom';
 import { useToken } from '../../TokenContext';
 import './Header.css';
@@ -9,8 +8,8 @@ function Header() {
   return (
     <header>
       <div className="titleUser">
-        <NavLink to="/">
-          <Title />
+        <NavLink className="titleApp" to="/">
+          <h1>AppNotas</h1>
         </NavLink>
 
         {token && (

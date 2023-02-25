@@ -1,15 +1,16 @@
-.Login {
+.divLogin {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   margin-top: 2rem;
 }
-.Login > form {
+.divLogin > form {
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
 }
-.Login > form > input {
+.divLogin > form > input {
   margin-bottom: 1rem;
   padding: 0.3rem;
 }

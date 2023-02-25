@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import { showAlert, showSuccess } from '../../functions';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
-// import './App.css';
+import './CategoryList.css';
 
 export const CategoryList = () => {
   const [categories, setCategories] = useState([]);
