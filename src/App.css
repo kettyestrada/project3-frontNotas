@@ -8,7 +8,7 @@ body {
 }
 main {
   margin-top: 200px; /* establece el margen superior para evitar que el contenido principal se oculte detrás del encabezado */
-  margin-bottom: 60px; /* establece el margen inferior para evitar que el contenido principal se oculte detrás del pie de página */
+  margin-bottom: 80px; /* establece el margen inferior para evitar que el contenido principal se oculte detrás del pie de página */
   height: calc(100% - 260px);
   transition: 0.5s;
 }
@@ -21,6 +21,7 @@ article.dark {
   --negative: #000;
 }
 header {
+  position: fixed;
   top: 0;
   width: 100%;
   min-height: 60px;

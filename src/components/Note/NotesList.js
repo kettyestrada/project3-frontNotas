@@ -74,52 +74,54 @@ function NotesList() {
       });
   }
 
-  if (!token) return <Navigate to='/login' />;
+  if (!token) return <Navigate to="/login" />;
 
   return (
-    <div className='note'>
-      <div className='container-fluid'>
-        <table className='table table-bordered'>
-          <thead>
-            <tr>
-              <th className='th-50'>Titulo</th>
-              <th className='th-250'>Categoria</th>
-              <th className='th-25'>Acciones</th>
-            </tr>
-          </thead>
-          <tbody className='table-group-divider'>
-            {notes.map((note) => (
-              <tr key={note.id}>
-                <td>{note.title}</td>
-                <td>
-                  {note.categoryTitle ? note.categoryTitle : 'Sin Categoria'}
-                </td>
-                <td>
-                  <Link
-                    to={`/notes/${note.id}`}
-                    className='btn btn-info btn-space'
-                  >
-                    <i className='fa-solid fa-eye'></i>
-                  </Link>
-                  <Link
-                    to={`/notes/${note.id}/edit`}
-                    className='btn btn-warning btn-space'
-                  >
-                    <i className='fa-solid fa-edit'></i>
-                  </Link>
-                  <Link
-                    onClick={() => confirmDelete(note.id)}
-                    className='btn btn-danger btn-space'
-                  >
-                    <i className='fa-solid fa-trash'></i>
-                  </Link>
-                </td>
+    <main>
+      <div className="note">
+        <div className="container-fluid">
+          <table className="table table-bordered">
+            <thead>
+              <tr>
+                <th className="th-50">Titulo</th>
+                <th className="th-250">Categoria</th>
+                <th className="th-25">Acciones</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="table-group-divider">
+              {notes.map((note) => (
+                <tr key={note.id}>
+                  <td>{note.title}</td>
+                  <td>
+                    {note.categoryTitle ? note.categoryTitle : 'Sin Categoria'}
+                  </td>
+                  <td>
+                    <Link
+                      to={`/notes/${note.id}`}
+                      className="btn btn-info btn-space"
+                    >
+                      <i className="fa-solid fa-eye"></i>
+                    </Link>
+                    <Link
+                      to={`/notes/${note.id}/edit`}
+                      className="btn btn-warning btn-space"
+                    >
+                      <i className="fa-solid fa-edit"></i>
+                    </Link>
+                    <Link
+                      onClick={() => confirmDelete(note.id)}
+                      className="btn btn-danger btn-space"
+                    >
+                      <i className="fa-solid fa-trash"></i>
+                    </Link>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
-    </div>
+    </main>
   );
 }
 

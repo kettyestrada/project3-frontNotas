@@ -108,99 +108,101 @@ function CreateNote() {
       showAlert('Error al crear una nota: ' + error.message, 'warning');
     }
   };
-  if (!token) return <Navigate to='/' />;
+  if (!token) return <Navigate to="/" />;
 
   return (
     <>
-      <div className='note'>
-        <form onSubmit={handleSubmit}>
-          <div className='row'>
-            <div className='col-75'>
-              <input
-                type='text'
-                id='title'
-                name='title'
-                placeholder='Escribe aquí tú título...'
-                maxLength={100}
-                autoFocus
-                required
-              />
+      <main>
+        <div className="note">
+          <form onSubmit={handleSubmit}>
+            <div className="row">
+              <div className="col-75">
+                <input
+                  type="text"
+                  id="title"
+                  name="title"
+                  placeholder="Escribe aquí tú título..."
+                  maxLength={100}
+                  autoFocus
+                  required
+                />
+              </div>
             </div>
-          </div>
 
-          <div className='row'>
-            <div className='col-25'>
-              <label htmlFor='category'>Categoria</label>
+            <div className="row">
+              <div className="col-25">
+                <label htmlFor="category">Categoria</label>
+              </div>
+              <div className="col-75">
+                <select id="category" name="category">
+                  {categories.map((value) => {
+                    return (
+                      <option key={value.key} value={value.key}>
+                        {value.value}
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
             </div>
-            <div className='col-75'>
-              <select id='category' name='category'>
-                {categories.map((value) => {
-                  return (
-                    <option key={value.key} value={value.key}>
-                      {value.value}
-                    </option>
-                  );
-                })}
-              </select>
+            <div className="row">
+              <div className="text-note">
+                <ReactQuill
+                  id="text"
+                  name="text"
+                  placeholder="Escribe el texto de tú nota aquí.."
+                  maxLength={3000}
+                  value={text}
+                  onChange={setText}
+                  required
+                ></ReactQuill>
+              </div>
             </div>
-          </div>
-          <div className='row'>
-            <div className='text-note'>
-              <ReactQuill
-                id='text'
-                name='text'
-                placeholder='Escribe el texto de tú nota aquí..'
-                maxLength={3000}
-                value={text}
-                onChange={setText}
-                required
-              ></ReactQuill>
+            <div className="row">
+              <div className="col-25">
+                <label htmlFor="isPublic">Es pública?</label>
+              </div>
+              <div className="col-75">
+                <input type="radio" id="public" name="is_public" value="true" />
+                <label htmlFor="html">Si</label>
+                <input
+                  type="radio"
+                  id="public"
+                  name="is_public"
+                  value="false"
+                  defaultChecked
+                />
+                <label htmlFor="html">No</label>
+              </div>
             </div>
-          </div>
-          <div className='row'>
-            <div className='col-25'>
-              <label htmlFor='isPublic'>Es pública?</label>
-            </div>
-            <div className='col-75'>
-              <input type='radio' id='public' name='is_public' value='true' />
-              <label htmlFor='html'>Si</label>
-              <input
-                type='radio'
-                id='public'
-                name='is_public'
-                value='false'
-                defaultChecked
-              />
-              <label htmlFor='html'>No</label>
-            </div>
-          </div>
-          {!photo && (
-            <Dropzone onDrop={handleFileDrop}>
-              {({ getRootProps, getInputProps }) => (
-                <div {...getRootProps()}>
-                  <input {...getInputProps()} />
-                  <div className='dropzone'>
-                    Arrastra una imagen aquí o haz clic para seleccionar un
-                    archivo.
+            {!photo && (
+              <Dropzone onDrop={handleFileDrop}>
+                {({ getRootProps, getInputProps }) => (
+                  <div {...getRootProps()}>
+                    <input {...getInputProps()} />
+                    <div className="dropzone">
+                      Arrastra una imagen aquí o haz clic para seleccionar un
+                      archivo.
+                    </div>
                   </div>
-                </div>
-              )}
-            </Dropzone>
-          )}
-          {photo && (
-            <img
-              src={URL.createObjectURL(photo)}
-              width='200'
-              height='auto'
-              alt='Imagen seleccionada'
-            />
-          )}
+                )}
+              </Dropzone>
+            )}
+            {photo && (
+              <img
+                src={URL.createObjectURL(photo)}
+                width="200"
+                height="auto"
+                alt="Imagen seleccionada"
+              />
+            )}
 
-          <div className='row'>
-            <input type='submit' value='Crear' />
-          </div>
-        </form>
-      </div>
+            <div className="row">
+              <input type="submit" value="Crear" />
+            </div>
+          </form>
+        </div>
+      </main>
     </>
   );
 }

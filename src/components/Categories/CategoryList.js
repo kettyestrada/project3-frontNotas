@@ -199,108 +199,113 @@ export const CategoryList = () => {
   }
 
   //No permite visualizar esta pantalla si el usuario no está logueado
-  if (!token) return <Navigate to='/' />;
+  if (!token) return <Navigate to="/" />;
 
   return (
-    <div className='note'>
-      <div className='container-fluid'>
-        <div className='row mt-3'>
-          <div className='col-md-4 offset-md-4'>
-            <div className='d-grid mx-auto'>
-              <button
-                onClick={() => openModal(1)}
-                className='btn btn-dark'
-                data-bs-toggle='modal'
-                data-bs-target='#modalProducts'
-              >
-                <i className='fa-solid fa-circle-plus'></i> Añadir
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <table className='table table-bordered'>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Categoría</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody className='table-group-divider'>
-            {categories.map((value, i) => (
-              <tr key={value.value}>
-                <td>{i + 1}</td>
-                <td>{value.value}</td>
-                <td>
-                  <button
-                    onClick={() => openModal(2, value.value, value.key)}
-                    className='btn btn-warning'
-                    data-bs-toggle='modal'
-                    data-bs-target='#modalProducts'
-                  >
-                    <i className='fa-solid fa-edit'></i>
-                  </button>
-                  &nbsp;
-                  <button
-                    onClick={() => confirmDelete(value.key)}
-                    className='btn btn-danger'
-                  >
-                    <i className='fa-solid fa-trash'></i>
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-      <div id='modalProducts' className='modal fade' aria-hidden='true'>
-        <div className='modal-dialog'>
-          <div className='modal-content'>
-            <div className='modal-header'>
-              <label className='h5'>{titleModal}</label>
-              <button
-                type='button'
-                className='btn-close'
-                data-bs-dismiss='modal'
-                aria-label='Close'
-              ></button>
-            </div>
-            <div className='modal-body'>
-              <input type='hidden' id='id'></input>
-              <div className='input-group mb-3'>
-                <span className='input-group-text'>
-                  <i class='fa-solid fa-file-circle-plus'></i>
-                </span>
-                <input
-                  type='text'
-                  id='title'
-                  className='form-control'
-                  placeholder='Categoría'
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                ></input>
-              </div>
-              <div className='d-grid col-6 mx-auto'>
-                <button onClick={() => validate()} className='btn btn-success'>
-                  <i className='fa-solid fa-floppy-disk'></i> Guardar
+    <main>
+      <div className="note">
+        <div className="container-fluid">
+          <div className="row mt-3">
+            <div className="col-md-4 offset-md-4">
+              <div className="d-grid mx-auto">
+                <button
+                  onClick={() => openModal(1)}
+                  className="btn btn-dark"
+                  data-bs-toggle="modal"
+                  data-bs-target="#modalProducts"
+                >
+                  <i className="fa-solid fa-circle-plus"></i> Añadir
                 </button>
               </div>
             </div>
-            <div className='modal-footer'>
-              <button
-                type='button'
-                id='btnCerrar'
-                className='btn btn-secondary'
-                data-bs-dismiss='modal'
-              >
-                Cerrar
-              </button>
+          </div>
+
+          <table className="table table-bordered">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Categoría</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody className="table-group-divider">
+              {categories.map((value, i) => (
+                <tr key={value.value}>
+                  <td>{i + 1}</td>
+                  <td>{value.value}</td>
+                  <td>
+                    <button
+                      onClick={() => openModal(2, value.value, value.key)}
+                      className="btn btn-warning"
+                      data-bs-toggle="modal"
+                      data-bs-target="#modalProducts"
+                    >
+                      <i className="fa-solid fa-edit"></i>
+                    </button>
+                    &nbsp;
+                    <button
+                      onClick={() => confirmDelete(value.key)}
+                      className="btn btn-danger"
+                    >
+                      <i className="fa-solid fa-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <div id="modalProducts" className="modal fade" aria-hidden="true">
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <label className="h5">{titleModal}</label>
+                <button
+                  type="button"
+                  className="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div className="modal-body">
+                <input type="hidden" id="id"></input>
+                <div className="input-group mb-3">
+                  <span className="input-group-text">
+                    <i class="fa-solid fa-file-circle-plus"></i>
+                  </span>
+                  <input
+                    type="text"
+                    id="title"
+                    className="form-control"
+                    placeholder="Categoría"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                  ></input>
+                </div>
+                <div className="d-grid col-6 mx-auto">
+                  <button
+                    onClick={() => validate()}
+                    className="btn btn-success"
+                  >
+                    <i className="fa-solid fa-floppy-disk"></i> Guardar
+                  </button>
+                </div>
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  id="btnCerrar"
+                  className="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Cerrar
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 };
 export default CategoryList;

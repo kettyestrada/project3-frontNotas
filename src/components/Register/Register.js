@@ -11,7 +11,7 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
-  if (token) return <Navigate to='/' />;
+  if (token) return <Navigate to="/" />;
 
   // Función que maneja el envío del formulario.
 
@@ -43,39 +43,43 @@ const Register = () => {
       }
     } catch (err) {
       console.error(err);
+      showAlert(
+        'En estos momentos el sistema no se encuentra disponible, intente más tarde',
+        'warning'
+      );
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <main className='Register'>
-      <div className='divRegister'>
+    <main className="Register">
+      <div className="divRegister">
         <h2>Registro</h2>
         <form onSubmit={handleSubmit}>
-          <label htmlFor='email'>Email:</label>
+          <label htmlFor="email">Email:</label>
           <input
-            type='email'
-            id='email'
+            type="email"
+            id="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
             autoFocus
           />
-          <label htmlFor='pass'>Contraseña:</label>
+          <label htmlFor="pass">Contraseña:</label>
           <input
-            type='password'
-            id='pass'
+            type="password"
+            id="pass"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            minLength='6'
+            minLength="6"
             required
           />
 
-          <button className='btn-register' disabled={loading}>
+          <button className="btn-register" disabled={loading}>
             Registrarse
           </button>
-          <NavLink to='/login'>Iniciar sesión</NavLink>
+          <NavLink to="/login">Iniciar sesión</NavLink>
         </form>
       </div>
     </main>
