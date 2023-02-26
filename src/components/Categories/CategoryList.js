@@ -233,7 +233,7 @@ export const CategoryList = () => {
                 <tr key={value.value}>
                   <td>{i + 1}</td>
                   <td>{value.value}</td>
-                  <td>
+                  <td className="tdActions">
                     <button
                       onClick={() => openModal(2, value.value, value.key)}
                       className="btn btn-warning"

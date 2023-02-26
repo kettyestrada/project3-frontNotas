@@ -2,9 +2,12 @@ button.btn-dark {
   margin: 0px 0px 20px 0px;
   background-color: #aeb3ae;
   border: none;
-  border-width : 0;
-  border : 0;
+  border-width: 0;
+  border: 0;
 }
 button.btn-dark:hover {
   background-color: #8f928f;
+}
+tbody > tr > td {
+  text-align: center;
 }
