@@ -25,11 +25,8 @@ header {
   top: 0;
   width: 100%;
   min-height: 60px;
-  align-items: center;
   background-color: rgb(125, 185, 182);
   color: #fff;
-  display: flex;
-  justify-content: space-between;
   padding: 1rem;
 }
 header button {
