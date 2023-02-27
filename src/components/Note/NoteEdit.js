@@ -142,19 +142,19 @@ const NoteEdit = () => {
     return formData;
   }
   //Si no hay token, enviamos al usuario a la pantalla inicial
-  if (!token) return <Navigate to='/' />;
+  if (!token) return <Navigate to="/" />;
 
   return (
-    <>
-      <div className='note'>
+    <main>
+      <div className="note">
         <form onSubmit={handleSubmit}>
-          <div className='row'>
-            <div className='col-75'>
+          <div className="row">
+            <div className="col-75">
               <input
-                type='text'
-                id='title'
-                name='title'
-                placeholder='Escribe un titulo aquí...'
+                type="text"
+                id="title"
+                name="title"
+                placeholder="Escribe un titulo aquí..."
                 maxLength={100}
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
@@ -164,14 +164,14 @@ const NoteEdit = () => {
             </div>
           </div>
 
-          <div className='row'>
-            <div className='col-25'>
-              <label htmlFor='category'>Categoria</label>
+          <div className="row">
+            <div className="col-25">
+              <label htmlFor="category">Categoria</label>
             </div>
-            <div className='col-75'>
+            <div className="col-75">
               <select
-                id='category'
-                name='category'
+                id="category"
+                name="category"
                 value={noteCategory}
                 onChange={(e) => setNoteCategory(e.target.value)}
               >
@@ -185,12 +185,12 @@ const NoteEdit = () => {
               </select>
             </div>
           </div>
-          <div className='row'>
-            <div className='col-75'>
+          <div className="row">
+            <div className="col-75">
               <ReactQuill
-                id='text'
-                name='text'
-                placeholder='Escribe el texto de tú nota aquí..'
+                id="text"
+                name="text"
+                placeholder="Escribe el texto de tú nota aquí.."
                 maxLength={3000}
                 value={text}
                 onChange={setText}
@@ -199,29 +199,29 @@ const NoteEdit = () => {
             </div>
           </div>
 
-          <div className='row'>
-            <div className='col-25'>
-              <label htmlFor='isPublic'>Es pública?</label>
+          <div className="row">
+            <div className="col-25">
+              <label htmlFor="isPublic">Es pública?</label>
             </div>
-            <div className='col-75'>
+            <div className="col-75">
               <input
-                type='radio'
-                id='public'
-                name='is_public'
-                value='1'
+                type="radio"
+                id="public"
+                name="is_public"
+                value="1"
                 onChange={() => setIsPublic(1)}
                 checked={isPublic === 1}
               />
-              <label htmlFor='html'>Si</label>
+              <label htmlFor="html">Si</label>
               <input
-                type='radio'
-                id='public'
-                name='is_public'
-                value='0'
+                type="radio"
+                id="public"
+                name="is_public"
+                value="0"
                 onChange={() => setIsPublic(0)}
                 checked={isPublic === 0}
               />
-              <label htmlFor='html'>No</label>
+              <label htmlFor="html">No</label>
             </div>
           </div>
 
@@ -230,7 +230,7 @@ const NoteEdit = () => {
               {({ getRootProps, getInputProps }) => (
                 <div {...getRootProps()}>
                   <input {...getInputProps()} />
-                  <div className='dropzone'>
+                  <div className="dropzone">
                     Arrastra una imagen aquí o haz clic para seleccionar un
                     archivo.
                   </div>
@@ -241,18 +241,18 @@ const NoteEdit = () => {
           {photo && (
             <img
               src={URL.createObjectURL(photo)}
-              width='200'
-              height='auto'
-              alt='Imagen seleccionada'
+              width="200"
+              height="auto"
+              alt="Imagen seleccionada"
             />
           )}
 
-          <div className='row'>
-            <input type='submit' value='Actualizar' />
+          <div className="row">
+            <input type="submit" value="Actualizar" />
           </div>
         </form>
       </div>
-    </>
+    </main>
   );
 };
 export default NoteEdit;
