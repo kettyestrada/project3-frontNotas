@@ -6,56 +6,17 @@ import 'react-quill/dist/quill.snow.css';
 import Dropzone from 'react-dropzone';
 
 import { useState, useEffect } from 'react';
+import { useToken } from '../../TokenContext';
 import { useNavigate, Navigate } from 'react-router-dom';
 import { showAlert, showSuccess } from '../../functions';
 
-function CreateNote() {
-  const token = localStorage.getItem('token');
-  const [categories, setCategories] = useState([]);
-  const [photo, setPhoto] = useState(null);
+function CreateNote({ categories, setCategories }) {
+  const [token] = useToken();
 
+  const [photo, setPhoto] = useState(null);
   const [text, setText] = useState('');
 
   const navigate = useNavigate();
-
-  useEffect(() => {
-    //Solo solicita las categorias si el usuario está logueado.
-    if (token) {
-      fetchCategories();
-    }
-  }, []);
-
-  async function fetchCategories() {
-    try {
-      const response = await fetch('http://localhost:8080/categories', {
-        headers: {
-          Authorization: token,
-        },
-      });
-
-      const data = await response.json();
-      const results = [];
-
-      if (response.status === 200) {
-        data.message.forEach((value) => {
-          results.push({
-            key: value.id,
-            value: value.title,
-          });
-        });
-        setCategories([{ key: 0, value: 'Sin categoria' }, ...results]);
-      } else {
-        console.log(data);
-        showAlert(
-          'Error al obtener las categorias: ' + data.message,
-          'warning'
-        );
-      }
-    } catch (error) {
-      console.log(error);
-      showAlert('Error al obtener las categorias: ' + error.message, 'warning');
-    }
-  }
 
   const handleFileDrop = (files) => {
     if (files.length > 0 && files[0].type.startsWith('image/')) {

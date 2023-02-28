@@ -7,8 +7,7 @@ import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import './CategoryList.css';
 
-export const CategoryList = () => {
-  const [categories, setCategories] = useState([]);
+export const CategoryList = ({ categories, setCategories }) => {
   const [title, setTitle] = useState('');
   const [idCategory, setIdCategory] = useState('');
   const [titleModal, setTitleModal] = useState('');
@@ -16,13 +15,36 @@ export const CategoryList = () => {
   const [loading, setLoading] = useState(false);
   const [token, setToken] = useToken();
 
-  useEffect(() => {
-    //Solo solicita las categorias si el usuario está logueado.
-    if (token) {
-      //cargo las categorias
-      getCategories();
+  // Función para crear categoría.
+  async function updateCategory() {
+    try {
+      const res = await fetch(`http://localhost:8080/category/${idCategory}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+          Authorization: token,
+        },
+        body: JSON.stringify({
+          title,
+        }),
+      });
+      const body = await res.json();
+
+      //si ha ido bien o ha ido mal mostramos por alert el mensaje,
+      // sea o no sea de error.
+      if (body.status === 'error') {
+        showAlert(body.message, 'warning');
+      } else {
+        setTitle('');
+        showSuccess(body.message);
+        document.getElementById('btnCerrar').click();
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
     }
-  }, []);
+  }
 
   //Abre el modal y carga los datos según desde donde se llame
   const openModal = (op, title, idCategory) => {
@@ -99,69 +121,8 @@ export const CategoryList = () => {
         setTitle('');
         showSuccess(body.message);
         document.getElementById('btnCerrar').click();
-        getCategories();
+
         //navigate('/login');
-      }
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  //Funcion para recuperar las categorias
-  async function getCategories() {
-    try {
-      const resp = await fetch('http://localhost:8080/categories', {
-        headers: {
-          Authorization: token,
-        },
-      });
-      const data = await resp.json();
-      const results = [];
-
-      if (resp.status === 200) {
-        data.message.forEach((value) => {
-          results.push({
-            key: value.id,
-            value: value.title,
-          });
-        });
-        setCategories(results);
-      } else {
-        console.log(data);
-        showAlert(data.message, 'warning');
-      }
-    } catch (error) {
-      console.log(error);
-      showAlert(error.message, 'warning');
-    }
-  }
-
-  // Función para crear categoría.
-  async function updateCategory() {
-    try {
-      const res = await fetch(`http://localhost:8080/category/${idCategory}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-type': 'application/json; charset=UTF-8',
-          Authorization: token,
-        },
-        body: JSON.stringify({
-          title,
-        }),
-      });
-      const body = await res.json();
-
-      //si ha ido bien o ha ido mal mostramos por alert el mensaje,
-      // sea o no sea de error.
-      if (body.status === 'error') {
-        showAlert(body.message, 'warning');
-      } else {
-        setTitle('');
-        showSuccess(body.message);
-        document.getElementById('btnCerrar').click();
-        getCategories();
       }
     } catch (err) {
       console.error(err);
@@ -182,7 +143,6 @@ export const CategoryList = () => {
       });
       const data = await resp.json();
       if (resp.status === 200) {
-        getCategories();
         showSuccess('Categoría eliminada');
       } else if (resp.status === 500) {
         showAlert(

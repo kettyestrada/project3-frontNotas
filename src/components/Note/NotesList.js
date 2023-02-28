@@ -1,40 +1,42 @@
 import React, { useState, useEffect } from 'react';
 import { Link, Navigate } from 'react-router-dom';
+import { useToken } from '../../TokenContext';
 import withReactContent from 'sweetalert2-react-content';
 import { showAlert, showSuccess } from '../../functions';
 import Swal from 'sweetalert2';
 import './NotesList.css';
 
 function NotesList() {
+  const [token] = useToken();
   const [notes, setNotes] = useState([]);
-  const token = localStorage.getItem('token');
 
   //Solo solicita las categorias si el usuario está logueado.
   useEffect(() => {
+    const fetchNotes = async () => {
+      try {
+        const response = await fetch('http://localhost:8080/note', {
+          headers: {
+            Authorization: token,
+          },
+        });
+
+        const data = await response.json();
+
+        if (response.status === 200) {
+          setNotes(data.message);
+        } else {
+          console.log(data);
+          showAlert('Error al obtener las notas: ' + data.message, 'warning');
+        }
+      } catch (error) {
+        showAlert('Error al obtener las notas: ' + error.message, 'warning');
+      }
+    };
+
     if (token) {
       fetchNotes();
     }
-  }, []);
-
-  async function fetchNotes() {
-    try {
-      const response = await fetch('http://localhost:8080/notes', {
-        headers: {
-          Authorization: token,
-        },
-      });
-      const data = await response.json();
-
-      if (response.status === 200) {
-        setNotes(data.message);
-      } else {
-        console.log(data);
-        showAlert('Error al obtener las notas: ' + data.message, 'warning');
-      }
-    } catch (error) {
-      showAlert('Error al obtener las notas: ' + error.message, 'warning');
-    }
-  }
+  }, [token]);
 
   const handleConfirmDelete = async (id) => {
     try {
