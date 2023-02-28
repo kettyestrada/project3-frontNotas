@@ -104,12 +104,7 @@ function NotesList() {
                     >
                       <i className="fa-solid fa-eye"></i>
                     </Link>
-                    <Link
-                      to={`/notes/${note.id}/edit`}
-                      className="btn btn-warning btn-space"
-                    >
-                      <i className="fa-solid fa-edit"></i>
-                    </Link>
+
                     <Link
                       onClick={() => confirmDelete(note.id)}
                       className="btn btn-danger btn-space"

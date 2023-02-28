@@ -15,7 +15,6 @@ import Footer from './components/Footer/Footer';
 import NotesList from './components/Note/NotesList';
 import CreateNote from './components/Note/CreateNote';
 import NoteView from './components/Note/NoteView';
-import NoteEdit from './components/Note/NoteEdit';
 
 function App() {
   const [token] = useToken();
@@ -24,22 +23,15 @@ function App() {
   useEffect(() => {
     const getCategories = async () => {
       try {
-        const resp = await fetch('http://localhost:8080/categories', {
+        const resp = await fetch('http://localhost:8080/category', {
           headers: {
             Authorization: token,
           },
         });
         const data = await resp.json();
-        const results = [];
 
         if (resp.status === 200) {
-          data.message.forEach((value) => {
-            results.push({
-              key: value.id,
-              value: value.title,
-            });
-          });
-          setCategories(results);
+          setCategories(data.message);
         } else {
           console.log(data);
           showAlert(data.message, 'warning');
@@ -49,6 +41,8 @@ function App() {
         showAlert(error.message, 'warning');
       }
     };
+
+    if (token) getCategories();
   }, [token]);
 
   return (
@@ -62,8 +56,10 @@ function App() {
           element={<CreateNote categories={categories} />}
         />
         <Route path="/noteslist" element={<NotesList />} />
-        <Route path="/notes/:id" element={<NoteView />} />
-        <Route path="/notes/:id/edit" element={<NoteEdit />} />
+        <Route
+          path="/notes/:id"
+          element={<NoteView categories={categories} />}
+        />
         <Route path="/register" element={<Register />} />
         <Route
           path="/categoryList"
