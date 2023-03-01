@@ -22,7 +22,7 @@ export function showSuccess(mensaje) {
   });
 }
 
-function onfocus(foco) {
+export function onfocus(foco) {
   if (foco !== '') {
     document.getElementById(foco).focus();
   }

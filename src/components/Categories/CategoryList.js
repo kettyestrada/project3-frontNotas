@@ -29,28 +29,31 @@ export const CategoryList = ({ categories, setCategories }) => {
   async function createCategory() {
     try {
       setLoading(true);
-
-      const res = await fetch('http://localhost:8080/category', {
-        method: 'post',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: token,
-        },
-        body: JSON.stringify({
-          title,
-        }),
-      });
-      const body = await res.json();
-
-      //si ha ido bien o ha ido mal mostramos por alert el mensaje,
-      // sea o no sea de error.
-      if (body.status === 'error') {
-        showAlert(body.message, 'warning');
+      if (title === '') {
+        showAlert('La categoría no puede estar vacía', 'error');
       } else {
-        setTitle('');
-        setCategories([...categories, body.data.category]);
-        showSuccess(body.message);
-        document.getElementById('btnCerrar').click();
+        const res = await fetch('http://localhost:8080/category', {
+          method: 'post',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: token,
+          },
+          body: JSON.stringify({
+            title,
+          }),
+        });
+        const body = await res.json();
+
+        //si ha ido bien o ha ido mal mostramos por alert el mensaje,
+        // sea o no sea de error.
+        if (body.status === 'error') {
+          showAlert(body.message, 'warning');
+        } else {
+          setTitle('');
+          setCategories([...categories, body.data.category]);
+          showSuccess(body.message);
+          document.getElementById('btnCerrar').click();
+        }
       }
     } catch (err) {
       console.error(err);
@@ -67,39 +70,45 @@ export const CategoryList = ({ categories, setCategories }) => {
   async function updateCategory() {
     try {
       setLoading(true);
-
-      const res = await fetch(`http://localhost:8080/category/${idCategory}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-type': 'application/json; charset=UTF-8',
-          Authorization: token,
-        },
-        body: JSON.stringify({
-          title,
-        }),
-      });
-      const body = await res.json();
-
-      //si ha ido bien o ha ido mal mostramos por alert el mensaje,
-      // sea o no sea de error.
-      if (body.status === 'error') {
-        showAlert(body.message, 'warning');
+      if (title === '') {
+        showAlert('La categoría no puede estar vacía', 'error');
       } else {
-        // creamos un nuevo array de categorias manteniendo todas las categorías
-        //existentes, pero modificando la categoría que acabamos de editar
-        const modifyCategories = categories.map((currentCategory) => {
-          if (currentCategory.id === idCategory) {
-            currentCategory.title = title;
+        const res = await fetch(
+          `http://localhost:8080/category/${idCategory}`,
+          {
+            method: 'PATCH',
+            headers: {
+              'Content-type': 'application/json; charset=UTF-8',
+              Authorization: token,
+            },
+            body: JSON.stringify({
+              title,
+            }),
           }
+        );
+        const body = await res.json();
 
-          return currentCategory;
-        });
+        //si ha ido bien o ha ido mal mostramos por alert el mensaje,
+        // sea o no sea de error.
+        if (body.status === 'error') {
+          showAlert(body.message, 'warning');
+        } else {
+          // creamos un nuevo array de categorias manteniendo todas las categorías
+          //existentes, pero modificando la categoría que acabamos de editar
+          const modifyCategories = categories.map((currentCategory) => {
+            if (currentCategory.id === idCategory) {
+              currentCategory.title = title;
+            }
 
-        setCategories(modifyCategories);
+            return currentCategory;
+          });
 
-        setTitle('');
-        showSuccess(body.message);
-        document.getElementById('btnCerrar').click();
+          setCategories(modifyCategories);
+
+          setTitle('');
+          showSuccess(body.message);
+          document.getElementById('btnCerrar').click();
+        }
       }
     } catch (err) {
       console.error(err);
@@ -143,6 +152,8 @@ export const CategoryList = ({ categories, setCategories }) => {
       }
     } catch (error) {
       showAlert(error.message, 'warning');
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -273,6 +284,7 @@ export const CategoryList = ({ categories, setCategories }) => {
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                     autoFocus
+                    required
                   ></input>
                 </div>
                 <div className="d-grid col-6 mx-auto">
@@ -281,6 +293,7 @@ export const CategoryList = ({ categories, setCategories }) => {
                       action === 1 ? createCategory() : updateCategory();
                     }}
                     className="btn btn-success"
+                    id="btnGuardar"
                     disabled={loading}
                   >
                     <i className="fa-solid fa-floppy-disk"></i> Guardar
