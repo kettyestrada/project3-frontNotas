@@ -14,7 +14,8 @@ function CreateNote({ categories }) {
 
     const [title, setTitle] = useState('');
     const [text, setText] = useState('');
-    const [idCategory, setIdCategory] = useState(categories[0].id);
+    const categoriesList = [{ id: '0', title: 'Sin categoria' }, ...categories];
+    const [idCategory, setIdCategory] = useState(categoriesList[0].id);
     const [isPublic, setIsPublic] = useState('0');
     const [photo, setPhoto] = useState(null);
 
@@ -36,9 +37,12 @@ function CreateNote({ categories }) {
 
         formData.append('title', title);
         formData.append('text', text);
-        formData.append('idCategory', Number(idCategory));
         formData.append('isPublic', isPublic);
         formData.append('file', photo);
+
+        if (idCategory !== '0') {
+            formData.append('idCategory', idCategory);
+        }
 
         try {
             const resp = await fetch('http://localhost:8080/note', {
@@ -93,9 +97,8 @@ function CreateNote({ categories }) {
                                 id='category'
                                 value={idCategory}
                                 onChange={(e) => setIdCategory(e.target.value)}
-                                required
                             >
-                                {categories.map((currentCategory) => {
+                                {categoriesList.map((currentCategory) => {
                                     return (
                                         <option
                                             key={currentCategory.id}
