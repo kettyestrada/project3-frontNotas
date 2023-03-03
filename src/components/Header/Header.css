@@ -22,14 +22,8 @@ div.userLogeado {
   align-items: flex-end;
 }
 
-p.msgLogueado {
-  font-weight: bold;
-  color: #fff;
-  text-decoration: none;
-}
 
 .titleApp {
-  display: inline-block;
   padding: 0.5rem 1rem;
   color: #fff;
   border: none;
@@ -41,27 +35,13 @@ p.msgLogueado {
   cursor: pointer;
 }
 
-.signOff {
-  display: inline-block;
-  padding: 0.5rem 1rem;
-  color: rgb(9, 9, 9);
-  border: none;
-  border-radius: 0.25rem;
-
-  font-size: 1rem;
-  cursor: pointer;
-}
-
-.signOff:hover {
-  background-color: #dae2c2;
-}
-
 nav {
   width: 70%;
   background-color: rgb(245, 233, 207);
   display: flex;
   flex-direction: row;
   border-radius: 0.25rem;
+  float: right;
 }
 ul {
   height: 100%;

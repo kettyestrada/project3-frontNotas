@@ -70,5 +70,6 @@ a img:hover {
 }
 
 .btn-space {
-  margin-left: 0.5rem !important;
+  margin-left: 0.2rem !important;
+  margin-top: 0.2rem !important;
 }

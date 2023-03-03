@@ -6,13 +6,12 @@ import Dropzone from 'react-dropzone';
 
 import { useState, useEffect } from 'react';
 import { useToken } from '../../TokenContext';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { showAlert, showSuccess } from '../../functions';
 
 function NoteView({ categories }) {
     const { id } = useParams();
     const [token] = useToken();
-    const navigate = useNavigate();
 
     const [note, setNote] = useState();
     const [title, setTitle] = useState('');
@@ -71,6 +70,10 @@ function NoteView({ categories }) {
         }
     };
 
+    function showImage(imageName) {
+        return 'http://localhost:8080/' + imageName;
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -105,6 +108,7 @@ function NoteView({ categories }) {
                     text: body.data.note.text,
                     image: body.data.note.image,
                 });
+                setPhoto(null);
 
                 showSuccess('Nota editada satisfactoriamente');
             } else {
@@ -189,33 +193,38 @@ function NoteView({ categories }) {
                             ></textarea>
                         </div>
                     </div>
-                    <div className='row'>
-                        <div className='col-25'>
-                            <label htmlFor='isPublic'>Es pública?</label>
+                    {note?.image && (
+                        <img src={showImage(note.image)} alt={note.title} />
+                    )}
+                    {note?.owner === 1 && (
+                        <div className='row'>
+                            <div className='col-25'>
+                                <label htmlFor='isPublic'>Es pública?</label>
+                            </div>
+                            <div className='col-75'>
+                                <input
+                                    type='radio'
+                                    name='isPublic'
+                                    id='public'
+                                    value='public'
+                                    readOnly={note?.owner === 0}
+                                    onChange={(e) => setIsPublic('1')}
+                                    checked={isPublic === '1'}
+                                />
+                                <label htmlFor='html'>Si</label>
+                                <input
+                                    type='radio'
+                                    id='public'
+                                    name='isPublic'
+                                    value='private'
+                                    readOnly={note?.owner === 0}
+                                    onChange={(e) => setIsPublic('0')}
+                                    checked={isPublic === '0'}
+                                />
+                                <label htmlFor='html'>No</label>
+                            </div>
                         </div>
-                        <div className='col-75'>
-                            <input
-                                type='radio'
-                                name='isPublic'
-                                id='public'
-                                value='public'
-                                readOnly={note?.owner === 0}
-                                onChange={(e) => setIsPublic('1')}
-                                checked={isPublic === '1'}
-                            />
-                            <label htmlFor='html'>Si</label>
-                            <input
-                                type='radio'
-                                id='public'
-                                name='isPublic'
-                                value='private'
-                                readOnly={note?.owner === 0}
-                                onChange={(e) => setIsPublic('0')}
-                                checked={isPublic === '0'}
-                            />
-                            <label htmlFor='html'>No</label>
-                        </div>
-                    </div>
+                    )}
                     {note?.owner === 1 && (
                         <Dropzone onDrop={handleFileDrop}>
                             {({ getRootProps, getInputProps }) => (
@@ -238,8 +247,6 @@ function NoteView({ categories }) {
                     {photo && (
                         <img
                             src={URL.createObjectURL(photo)}
-                            width='200'
-                            height='auto'
                             alt='Imagen seleccionada'
                         />
                     )}

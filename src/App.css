@@ -4,7 +4,6 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   margin: 0;
-  padding: 0;
 }
 
 article.light {
@@ -16,29 +15,20 @@ article.dark {
   --negative: #000;
 }
 header {
-  position: fixed;
   top: 0;
   width: 100%;
-  min-height: 60px;
+  height: 10rem;
   background-color: rgb(125, 185, 182);
   color: #fff;
   padding: 1rem;
+  position: fixed;
 }
 header button {
   background-color: transparent;
   border: none;
   font-size: 2rem;
 }
-footer {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  height: 70px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: rgb(125, 185, 182);
-}
+
 article {
   background-color: var(--negative);
   color: var(--positive);
@@ -50,4 +40,26 @@ article {
   content: '';
   display: table;
   clear: both;
+}
+
+
+main {
+  display: flex;
+  justify-content: center;
+  margin-bottom: calc(2.5rem);
+  margin-top: calc(10rem);
+}
+
+
+
+/* Estilos para pantallas más pequeñas */
+@media (max-width: 425px) {
+  header {
+    height: 12rem;
+  }
+
+  main {
+    margin-top: calc(12rem);
+  }
+
 }

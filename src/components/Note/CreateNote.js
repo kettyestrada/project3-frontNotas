@@ -146,29 +146,25 @@ function CreateNote({ categories }) {
                             <label htmlFor='html'>No</label>
                         </div>
                     </div>
-                    {!photo && (
-                        <Dropzone onDrop={handleFileDrop}>
-                            {({ getRootProps, getInputProps }) => (
-                                <div {...getRootProps()}>
-                                    <input
-                                        {...getInputProps()}
-                                        onChange={(e) =>
-                                            setPhoto(e.target.files[0])
-                                        }
-                                    />
-                                    <div className='dropzone'>
-                                        Arrastra una imagen aquí o haz clic para
-                                        seleccionar un archivo.
-                                    </div>
+                    <Dropzone onDrop={handleFileDrop}>
+                        {({ getRootProps, getInputProps }) => (
+                            <div {...getRootProps()}>
+                                <input
+                                    {...getInputProps()}
+                                    onChange={(e) =>
+                                        setPhoto(e.target.files[0])
+                                    }
+                                />
+                                <div className='dropzone'>
+                                    Arrastra una imagen aquí o haz clic para
+                                    seleccionar un archivo.
                                 </div>
-                            )}
-                        </Dropzone>
-                    )}
+                            </div>
+                        )}
+                    </Dropzone>
                     {photo && (
                         <img
                             src={URL.createObjectURL(photo)}
-                            width='200'
-                            height='auto'
                             alt='Imagen seleccionada'
                         />
                     )}

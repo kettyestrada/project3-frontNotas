@@ -1,0 +1,52 @@
+.menu {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+}
+
+.signOff {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.25rem;
+  font-size: 1rem;
+  cursor: pointer;
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+  background-color: #dc3545;
+}
+
+.signOff:hover {
+  background-color: #bb2d3b;
+  color: white;
+}
+
+.menuItem {
+  display: block;
+  padding: 10px;
+  color: #333;
+  text-decoration: none;
+}
+
+.menuItem:hover {
+  background-color: #eee;
+}
+
+@media only screen and (min-width: 768px) {
+  .menu {
+    flex-direction: row;
+  }
+  
+}
+
+/* Estilos para pantallas más pequeñas */
+@media (max-width: 425px) {
+
+  .menuItem {
+    padding: 2px;
+  }
+
+}
+  

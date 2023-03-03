@@ -1,31 +1,18 @@
 import './Header.css';
 import { NavLink } from 'react-router-dom';
-import { useToken } from '../../TokenContext';
 import Menu from '../Menu/Menu';
 
 function Header() {
-  const [token, setToken] = useToken();
-  return (
-    <header>
-      <div className="titleUser">
-        <NavLink className="titleApp" to="/">
-          <h1>AppNotas</h1>
-        </NavLink>
-
-        {token && (
-          <div className="userLogeado">
-            <p className="msgLogueado"> Has iniciado sesión en AppNotas</p>
-            <NavLink to="/" className="signOff" onClick={() => setToken(null)}>
-              <div className="button">
-                <p>Cerrar Sesión</p>
-              </div>
-            </NavLink>
-          </div>
-        )}
-      </div>
-      <Menu />
-    </header>
-  );
+    return (
+        <header>
+            <div className='titleUser'>
+                <NavLink className='titleApp' to='/'>
+                    <h1>AppNotas</h1>
+                </NavLink>
+            </div>
+            <Menu />
+        </header>
+    );
 }
 
 export default Header;

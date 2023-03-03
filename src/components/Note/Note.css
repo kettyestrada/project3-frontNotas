@@ -124,3 +124,17 @@ input[type=submit]:hover {
   margin-bottom: 10px;
   margin-top: 10px;
 }
+
+/* Estilos para pantallas más pequeñas */
+@media (max-width: 768px) {
+  img {
+    max-width: 100%;
+  }
+}
+
+/* Estilos para pantallas más grandes */
+@media (min-width: 768px) {
+  img {
+    max-width: 50%;
+  }
+}
