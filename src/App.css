@@ -6,12 +6,7 @@ body {
   margin: 0;
   padding: 0;
 }
-main {
-  margin-top: 200px; /* establece el margen superior para evitar que el contenido principal se oculte detrás del encabezado */
-  margin-bottom: 80px; /* establece el margen inferior para evitar que el contenido principal se oculte detrás del pie de página */
-  height: calc(100% - 260px);
-  transition: 0.5s;
-}
+
 article.light {
   --positive: #000;
   --negative: #fff;
