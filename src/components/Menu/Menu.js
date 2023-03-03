@@ -1,6 +1,5 @@
 import { NavLink } from 'react-router-dom';
 import { useToken } from '../../TokenContext';
-import './Menu.css';
 
 const Menu = () => {
   const [token, setToken] = useToken();
@@ -10,17 +9,17 @@ const Menu = () => {
       {token && (
         <ul>
           <li>
-            <NavLink to='/createnote' className='menuItem'>
+            <NavLink to="/createnote" className="menuItem">
               Crear Nota
             </NavLink>
           </li>
           <li>
-            <NavLink to='/noteslist' className='menuItem'>
+            <NavLink to="/noteslist" className="menuItem">
               Listar Notas
             </NavLink>
           </li>
           <li>
-            <NavLink to='/categoryList' className='menuItem'>
+            <NavLink to="/categoryList" className="menuItem">
               Gestionar Categorias
             </NavLink>
           </li>

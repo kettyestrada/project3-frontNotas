@@ -1,3 +1,7 @@
+* {
+  margin: 0;
+  padding: 0;
+}
 header {
   display: flex;
   flex-direction: column;
@@ -50,4 +54,87 @@ p.msgLogueado {
 
 .signOff:hover {
   background-color: #dae2c2;
+}
+
+nav {
+  width: 70%;
+  background-color: rgb(245, 233, 207);
+  display: flex;
+  flex-direction: row;
+  border-radius: 0.25rem;
+}
+ul {
+  height: 100%;
+  margin: 0 0 0 0;
+  padding: 0 0 0 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+li {
+  list-style: none;
+}
+.menuItem {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  color: rgb(9, 9, 9);
+  border: none;
+  border-radius: 0.25rem;
+  text-decoration: none;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.menuItem:hover {
+  background-color: #dae2c2;
+}
+
+/**
+ * ######################
+ * ## Max Width: 400px ##
+ * ######################
+*/
+@media (max-width: 400px) {
+  div.userLogeado * {
+    padding: 0;
+    box-sizing: border-box;
+    font-size: 0.7 rem;
+  }
+}
+
+/**
+ * ######################
+ * ## Max Width: 700px ##
+ * ######################
+*/
+@media (max-width: 700px) {
+  header {
+    display: flex;
+    flex-direction: column;
+  }
+  div.titleUser {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  div.userLogeado {
+    align-items: center;
+    justify-content: center;
+  }
+
+  div.userLogeado * {
+    padding: 0;
+    box-sizing: border-box;
+    font-size: 0.9 rem;
+  }
+
+  nav {
+    width: 100%;
+  }
+  ul {
+    flex-direction: row;
+  }
 }
