@@ -9,7 +9,7 @@ import { useToken } from '../../TokenContext';
 import { useParams } from 'react-router-dom';
 import { showAlert, showSuccess } from '../../functions';
 
-function NoteView({ categories }) {
+export const NoteView = ({ categories }) => {
     const { id } = useParams();
     const [token] = useToken();
 
@@ -240,6 +240,6 @@ function NoteView({ categories }) {
             </form>
         </main>
     );
-}
+};
 
 export default NoteView;
