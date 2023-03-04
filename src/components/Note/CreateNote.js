@@ -8,7 +8,7 @@ import { useToken } from '../../TokenContext';
 import { useNavigate, Navigate } from 'react-router-dom';
 import { showAlert, showSuccess } from '../../functions';
 
-function CreateNote({ categories }) {
+export const CreateNote = ({ categories }) => {
     const [token] = useToken();
     const navigate = useNavigate();
 
@@ -71,111 +71,90 @@ function CreateNote({ categories }) {
 
     return (
         <main>
-            <div className='note'>
-                <form onSubmit={handleSubmit}>
-                    <div className='row'>
-                        <div className='col-75'>
-                            <input
-                                type='text'
-                                id='title'
-                                placeholder='Escribe aquí tú título...'
-                                maxLength={100}
-                                value={title}
-                                onChange={(e) => setTitle(e.target.value)}
-                                autoFocus
-                                required
-                            />
-                        </div>
-                    </div>
+            <form className='note' onSubmit={handleSubmit}>
+                <input
+                    className=''
+                    type='text'
+                    id='title'
+                    placeholder='Escribe aquí tú título...'
+                    maxLength={100}
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    autoFocus
+                    required
+                />
 
-                    <div className='row'>
-                        <div className='col-25'>
-                            <label htmlFor='category'>Categoria</label>
-                        </div>
-                        <div className='col-75'>
-                            <select
-                                id='category'
-                                value={idCategory}
-                                onChange={(e) => setIdCategory(e.target.value)}
+                <label htmlFor='category'>Categoria</label>
+                <select
+                    id='category'
+                    value={idCategory}
+                    onChange={(e) => setIdCategory(e.target.value)}
+                >
+                    {categoriesList.map((currentCategory) => {
+                        return (
+                            <option
+                                key={currentCategory.id}
+                                value={currentCategory.id}
                             >
-                                {categoriesList.map((currentCategory) => {
-                                    return (
-                                        <option
-                                            key={currentCategory.id}
-                                            value={currentCategory.id}
-                                        >
-                                            {currentCategory.title}
-                                        </option>
-                                    );
-                                })}
-                            </select>
-                        </div>
-                    </div>
-                    <div className='row'>
-                        <div className='text-note'>
-                            <textarea
-                                placeholder='Escribe el texto de tú nota aquí..'
-                                maxLength={3000}
-                                value={text}
-                                onChange={(e) => setText(e.target.value)}
-                                required
-                            ></textarea>
-                        </div>
-                    </div>
-                    <div className='row'>
-                        <div className='col-25'>
-                            <label htmlFor='isPublic'>Es pública?</label>
-                        </div>
-                        <div className='col-75'>
-                            <input
-                                type='radio'
-                                id='public'
-                                name='isPublic'
-                                value='public'
-                                onChange={(e) => setIsPublic('1')}
-                            />
-                            <label htmlFor='html'>Si</label>
-                            <input
-                                type='radio'
-                                id='public'
-                                name='isPublic'
-                                value='private'
-                                onChange={(e) => setIsPublic('0')}
-                                defaultChecked
-                            />
-                            <label htmlFor='html'>No</label>
-                        </div>
-                    </div>
-                    <Dropzone onDrop={handleFileDrop}>
-                        {({ getRootProps, getInputProps }) => (
-                            <div {...getRootProps()}>
-                                <input
-                                    {...getInputProps()}
-                                    onChange={(e) =>
-                                        setPhoto(e.target.files[0])
-                                    }
-                                />
-                                <div className='dropzone'>
-                                    Arrastra una imagen aquí o haz clic para
-                                    seleccionar un archivo.
-                                </div>
-                            </div>
-                        )}
-                    </Dropzone>
-                    {photo && (
-                        <img
-                            src={URL.createObjectURL(photo)}
-                            alt='Imagen seleccionada'
-                        />
-                    )}
+                                {currentCategory.title}
+                            </option>
+                        );
+                    })}
+                </select>
 
-                    <div className='row'>
-                        <input type='submit' value='Crear' />
-                    </div>
-                </form>
-            </div>
+                <textarea
+                    placeholder='Escribe el texto de tú nota aquí..'
+                    maxLength={3000}
+                    value={text}
+                    onChange={(e) => setText(e.target.value)}
+                    required
+                ></textarea>
+                <div className='radio-buttons'>
+                    <label htmlFor='isPublic'>Es pública?</label>
+                    <input
+                        type='radio'
+                        id='public'
+                        name='isPublic'
+                        value='public'
+                        onChange={(e) => setIsPublic('1')}
+                    />
+                    <label htmlFor='html'>Si</label>
+                    <input
+                        type='radio'
+                        id='public'
+                        name='isPublic'
+                        value='private'
+                        onChange={(e) => setIsPublic('0')}
+                        defaultChecked
+                    />
+                    <label htmlFor='html'>No</label>
+                </div>
+
+                <Dropzone onDrop={handleFileDrop}>
+                    {({ getRootProps, getInputProps }) => (
+                        <div {...getRootProps()}>
+                            <input
+                                {...getInputProps()}
+                                onChange={(e) => setPhoto(e.target.files[0])}
+                            />
+                            <div className='dropzone'>
+                                Arrastra una imagen aquí o haz clic para
+                                seleccionar un archivo.
+                            </div>
+                        </div>
+                    )}
+                </Dropzone>
+                {photo && (
+                    <img
+                        src={URL.createObjectURL(photo)}
+                        alt='Imagen seleccionada'
+                    />
+                )}
+
+                <input type='submit' value='Crear' />
+            </form>
         </main>
     );
-}
+};
 
 export default CreateNote;
