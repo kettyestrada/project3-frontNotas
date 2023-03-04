@@ -64,6 +64,12 @@
   background-color: #fff;
 }
 
+.note p {
+  color: #000;
+  font-weight: lighter;
+  text-align: center;
+}
+
 .note textarea {
   height: 100px;
 }

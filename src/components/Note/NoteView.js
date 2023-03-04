@@ -125,139 +125,119 @@ function NoteView({ categories }) {
 
     return (
         <main>
-            <div className='note'>
+            <form className='note' onSubmit={handleSubmit}>
                 {note && (
                     <p>
+                        Creado el{' '}
                         {new Date(note.created_at).toLocaleDateString('es-ES')}
                     </p>
                 )}
-                <form onSubmit={handleSubmit}>
-                    <div className='row'>
-                        <div className='col-75'>
-                            <input
-                                type='text'
-                                id='title'
-                                placeholder='Escribe aquí tú título...'
-                                maxLength={100}
-                                value={title}
-                                onChange={(e) => setTitle(e.target.value)}
-                                autoFocus
-                                readOnly={note?.owner === 0}
-                                required
-                            />
-                        </div>
-                    </div>
 
-                    <div className='row'>
-                        <div className='col-25'>
-                            <label htmlFor='category'>Categoria</label>
-                        </div>
-                        <div className='col-75'>
-                            {note?.owner === 1 ? (
-                                <select
-                                    id='category'
-                                    value={idCategory}
+                <input
+                    type='text'
+                    id='title'
+                    placeholder='Escribe aquí tú título...'
+                    maxLength={100}
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    autoFocus
+                    readOnly={note?.owner === 0}
+                    required
+                />
+
+                <label htmlFor='category'>Categoria</label>
+
+                {note?.owner === 1 ? (
+                    <select
+                        id='category'
+                        value={idCategory}
+                        onChange={(e) => setIdCategory(e.target.value)}
+                        readOnly={note?.owner === 0}
+                        required
+                    >
+                        {categoriesList.map((currentCategory) => {
+                            return (
+                                <option
+                                    key={currentCategory.id}
+                                    value={currentCategory.id}
+                                >
+                                    {currentCategory.title}
+                                </option>
+                            );
+                        })}
+                    </select>
+                ) : (
+                    <select readOnly>
+                        <option>{note?.categoryTitle}</option>
+                    </select>
+                )}
+
+                <textarea
+                    placeholder='Escribe el texto de tú nota aquí..'
+                    maxLength={3000}
+                    value={text}
+                    onChange={(e) => setText(e.target.value)}
+                    readOnly={note?.owner === 0}
+                    required
+                ></textarea>
+
+                {note?.image && (
+                    <img src={showImage(note.image)} alt={note.title} />
+                )}
+                {note?.owner === 1 && (
+                    <div className='radio-buttons'>
+                        <label htmlFor='isPublic'>Es pública?</label>
+
+                        <input
+                            type='radio'
+                            name='isPublic'
+                            id='public'
+                            value='public'
+                            readOnly={note?.owner === 0}
+                            onChange={(e) => setIsPublic('1')}
+                            checked={isPublic === '1'}
+                        />
+                        <label htmlFor='html'>Si</label>
+                        <input
+                            type='radio'
+                            id='public'
+                            name='isPublic'
+                            value='private'
+                            readOnly={note?.owner === 0}
+                            onChange={(e) => setIsPublic('0')}
+                            checked={isPublic === '0'}
+                        />
+                        <label htmlFor='html'>No</label>
+                    </div>
+                )}
+                {note?.owner === 1 && (
+                    <Dropzone onDrop={handleFileDrop}>
+                        {({ getRootProps, getInputProps }) => (
+                            <div {...getRootProps()}>
+                                <input
+                                    {...getInputProps()}
                                     onChange={(e) =>
-                                        setIdCategory(e.target.value)
+                                        setPhoto(e.target.files[0])
                                     }
                                     readOnly={note?.owner === 0}
-                                    required
-                                >
-                                    {categoriesList.map((currentCategory) => {
-                                        return (
-                                            <option
-                                                key={currentCategory.id}
-                                                value={currentCategory.id}
-                                            >
-                                                {currentCategory.title}
-                                            </option>
-                                        );
-                                    })}
-                                </select>
-                            ) : (
-                                <select readOnly>
-                                    <option>{note?.categoryTitle}</option>
-                                </select>
-                            )}
-                        </div>
-                    </div>
-                    <div className='row'>
-                        <div className='text-note'>
-                            <textarea
-                                placeholder='Escribe el texto de tú nota aquí..'
-                                maxLength={3000}
-                                value={text}
-                                onChange={(e) => setText(e.target.value)}
-                                readOnly={note?.owner === 0}
-                                required
-                            ></textarea>
-                        </div>
-                    </div>
-                    {note?.image && (
-                        <img src={showImage(note.image)} alt={note.title} />
-                    )}
-                    {note?.owner === 1 && (
-                        <div className='row'>
-                            <div className='col-25'>
-                                <label htmlFor='isPublic'>Es pública?</label>
-                            </div>
-                            <div className='col-75'>
-                                <input
-                                    type='radio'
-                                    name='isPublic'
-                                    id='public'
-                                    value='public'
-                                    readOnly={note?.owner === 0}
-                                    onChange={(e) => setIsPublic('1')}
-                                    checked={isPublic === '1'}
                                 />
-                                <label htmlFor='html'>Si</label>
-                                <input
-                                    type='radio'
-                                    id='public'
-                                    name='isPublic'
-                                    value='private'
-                                    readOnly={note?.owner === 0}
-                                    onChange={(e) => setIsPublic('0')}
-                                    checked={isPublic === '0'}
-                                />
-                                <label htmlFor='html'>No</label>
-                            </div>
-                        </div>
-                    )}
-                    {note?.owner === 1 && (
-                        <Dropzone onDrop={handleFileDrop}>
-                            {({ getRootProps, getInputProps }) => (
-                                <div {...getRootProps()}>
-                                    <input
-                                        {...getInputProps()}
-                                        onChange={(e) =>
-                                            setPhoto(e.target.files[0])
-                                        }
-                                        readOnly={note?.owner === 0}
-                                    />
-                                    <div className='dropzone'>
-                                        Arrastra una imagen aquí o haz clic para
-                                        seleccionar un archivo.
-                                    </div>
+                                <div className='dropzone'>
+                                    Arrastra una imagen aquí o haz clic para
+                                    seleccionar un archivo.
                                 </div>
-                            )}
-                        </Dropzone>
-                    )}
-                    {photo && (
-                        <img
-                            src={URL.createObjectURL(photo)}
-                            alt='Imagen seleccionada'
-                        />
-                    )}
-
-                    <div className='row'>
-                        {note?.owner === 1 && (
-                            <input type='submit' value='Editar' />
+                            </div>
                         )}
-                    </div>
-                </form>
-            </div>
+                    </Dropzone>
+                )}
+                {photo && (
+                    <img
+                        src={URL.createObjectURL(photo)}
+                        alt='Imagen seleccionada'
+                    />
+                )}
+
+                {note?.owner === 1 && <input type='submit' value='Editar' />}
+            </form>
         </main>
     );
 }
