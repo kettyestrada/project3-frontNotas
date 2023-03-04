@@ -1,5 +1,4 @@
 import React from 'react';
-import './Note.css';
 
 import Dropzone from 'react-dropzone';
 
@@ -7,6 +6,7 @@ import { useState } from 'react';
 import { useToken } from '../../TokenContext';
 import { useNavigate, Navigate } from 'react-router-dom';
 import { showAlert, showSuccess } from '../../functions';
+import './Note.css';
 
 export const CreateNote = ({ categories }) => {
     const [token] = useToken();

@@ -1,6 +1,4 @@
 import React from 'react';
-import './Note.css';
-
 import 'react-quill/dist/quill.snow.css';
 import Dropzone from 'react-dropzone';
 
@@ -8,6 +6,7 @@ import { useState, useEffect } from 'react';
 import { useToken } from '../../TokenContext';
 import { useParams } from 'react-router-dom';
 import { showAlert, showSuccess } from '../../functions';
+import './Note.css';
 
 export const NoteView = ({ categories }) => {
     const { id } = useParams();
