@@ -42,7 +42,7 @@
 }
 
 /* Estilos para pantallas más pequeñas */
-@media (max-width: 425px) {
+@media (max-width: 768px) {
 
   .menuItem {
     padding: 2px;

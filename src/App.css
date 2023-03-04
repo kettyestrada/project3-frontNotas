@@ -53,7 +53,7 @@ main {
 
 
 /* Estilos para pantallas más pequeñas */
-@media (max-width: 425px) {
+@media (max-width: 768px) {
   header {
     height: 12rem;
   }
