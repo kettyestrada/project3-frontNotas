@@ -17,7 +17,7 @@ export const NoteView = ({ categories }) => {
     const [text, setText] = useState('');
     const categoriesList = [{ id: '0', title: 'Sin categoria' }, ...categories];
 
-    const [idCategory, setIdCategory] = useState(''); //id categoria seleccionada
+    const [idCategory, setIdCategory] = useState('');
     const [isPublic, setIsPublic] = useState('0');
     const [photo, setPhoto] = useState(null);
 

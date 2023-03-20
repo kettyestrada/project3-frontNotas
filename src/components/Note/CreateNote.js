@@ -14,6 +14,8 @@ export const CreateNote = ({ categories }) => {
 
     const [title, setTitle] = useState('');
     const [text, setText] = useState('');
+
+    //Creo una lista nueva de categorias donde le agrego un registro para el manejo del sin categoria
     const categoriesList = [{ id: '0', title: 'Sin categoria' }, ...categories];
     const [idCategory, setIdCategory] = useState(categoriesList[0].id);
     const [isPublic, setIsPublic] = useState('0');
@@ -22,6 +24,8 @@ export const CreateNote = ({ categories }) => {
     //No permite visualizar esta pantalla si el usuario no está logueado
     if (!token) return <Navigate to='/' />;
 
+    // si el tamaño del array es mayor a cero, quiere decir que hay un elemento
+    //se revisa en la primera posicion del array que tipo de archivo es, si es imagen asignamos la foto al useState.
     const handleFileDrop = (files) => {
         if (files.length > 0 && files[0].type.startsWith('image/')) {
             setPhoto(files[0]);
@@ -30,9 +34,11 @@ export const CreateNote = ({ categories }) => {
         }
     };
 
+    // esta funcion captura el evento cuando doy clic al boton crear.
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        //Constante para enviar informacion al backend
         const formData = new FormData();
 
         formData.append('title', title);
@@ -40,31 +46,41 @@ export const CreateNote = ({ categories }) => {
         formData.append('isPublic', isPublic);
         formData.append('file', photo);
 
+        //Como la categoria es opcional, reviso si se ha seleccionado categoria de la lista y la agrego al form data
+        //El valor cuando selecciono sin categoria es cero
         if (idCategory !== '0') {
             formData.append('idCategory', idCategory);
         }
 
         try {
+            //Creo una constante llamada resp y llamo al endopoint de crear nota del backend
             const resp = await fetch('http://localhost:8080/note', {
+                //El metodo es POST que es el que se usa para crear un recurso
                 method: 'POST',
+                //Agrego el token a la cabecera, sin el token no se puede realizar la operacion
                 headers: {
                     Authorization: token,
                 },
+                //Envio en el body la consante formData
                 body: formData,
             });
 
+            //Si la respuesta da un codigo 201 quiere decir que se creo la nota
             if (resp.status === 201) {
                 showSuccess('Nota creada satisfactoriamente');
                 navigate('/noteslist');
             } else {
+                //En caso de que el codigo de error (status code) sea diferente a 201, obtengo el json de respuesta para poder obtener el mensaje de error
                 const data = await resp.json();
                 console.log(data);
+                //Muestro el popup con el error
                 showAlert(
                     'Error al crear una nota: ' + data.message,
                     'warning'
                 );
             }
         } catch (error) {
+            //Por aca entra cuando hay error de comunicacion con el endpoint
             showAlert('Error al crear una nota: ' + error.message, 'warning');
         }
     };

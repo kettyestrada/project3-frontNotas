@@ -40,7 +40,9 @@ function App() {
             }
         };
 
-        if (token) getCategories();
+        if (token) {
+            getCategories();
+        }
     }, [token]);
 
     return (

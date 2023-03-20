@@ -4,6 +4,7 @@ import { useToken } from '../../TokenContext';
 import withReactContent from 'sweetalert2-react-content';
 import { showAlert, showSuccess } from '../../functions';
 import Swal from 'sweetalert2';
+import './Note.css';
 
 function NotesList() {
     const [token] = useToken();
