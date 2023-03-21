@@ -53,6 +53,8 @@ function NotesList() {
                 },
                 method: 'DELETE',
             });
+
+            // quito de la lista de notas la nota eliminada.
             const updatedNotes = notes.filter((note) => note.id !== id);
             showSuccess('Nota eliminada satisfactoriamente');
             setNotes(updatedNotes);

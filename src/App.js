@@ -16,6 +16,7 @@ import NotesList from './components/Note/NotesList';
 import CreateNote from './components/Note/CreateNote';
 import NoteView from './components/Note/NoteView';
 
+// en el App obtenemos las categorias para pasarlas a los demas componentes como parametros.
 function App() {
     const [token] = useToken();
     const [categories, setCategories] = useState([]);

@@ -21,9 +21,11 @@ export const NoteView = ({ categories }) => {
     const [isPublic, setIsPublic] = useState('0');
     const [photo, setPhoto] = useState(null);
 
+    // el useEffect es para cargar los datos de la nota ya existente
     useEffect(() => {
         const fetchNote = async () => {
             try {
+                // si tengo token lo envio, si no quiere decir que es un anonimo.
                 const resp = token
                     ? await fetch(`http://localhost:8080/note/${id}`, {
                           headers: {
@@ -32,8 +34,10 @@ export const NoteView = ({ categories }) => {
                       })
                     : await fetch(`http://localhost:8080/note/${id}`);
 
+                //Envio en el body la consante formData
                 const body = await resp.json();
 
+                //Si la respuesta da un codigo 200 quiere decir que se actualizo la nota
                 if (resp.status === 200) {
                     setNote(body.data.note);
 
@@ -41,8 +45,13 @@ export const NoteView = ({ categories }) => {
                     setTitle(body.data.note.title);
                     setText(body.data.note.text);
                     setIsPublic(body.data.note.is_public ? '1' : '0');
-                    setIdCategory(body.data.note.category_id);
+                    setIdCategory(
+                        body.data.note.category_id
+                            ? body.data.note.category_id
+                            : '0'
+                    );
                 } else {
+                    //En caso de que el codigo de error (status code) sea diferente a 201, obtengo el json de respuesta para poder obtener el mensaje de error
                     console.log(body);
                     showAlert(
                         'Error al obtener la nota: ' + body.message,
@@ -50,6 +59,7 @@ export const NoteView = ({ categories }) => {
                     );
                 }
             } catch (error) {
+                //Por aca entra cuando hay error de comunicacion con el endpoint
                 console.log('Error viewing note: ' + error.message);
                 showAlert(
                     'Error al obtener la nota: ' + error.message,

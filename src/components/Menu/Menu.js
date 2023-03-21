@@ -2,6 +2,7 @@ import { NavLink } from 'react-router-dom';
 import { useToken } from '../../TokenContext';
 import './Menu.css';
 
+// aqui tenemos los links de la App
 const Menu = () => {
     const [token, setToken] = useToken();
     return (
